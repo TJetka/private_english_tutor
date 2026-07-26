@@ -201,7 +201,13 @@ textarea{width:100%;min-height:110px;margin-top:8px;padding:12px;border-radius:1
    Content: original items written on the public Starters wordlist.
    ============================================================ */
 
-/* ---------- 1. CONTENT ---------- */
+/* ---------- 1. CONTENT ----------
+   EDITING RULE: an `id` is a permanent handle on this learner's progress.
+   Safe    : adding words, adding weeks, deleting words, fixing a typo in `pl`.
+   Unsafe  : reusing an existing id for a DIFFERENT word. Progress stays attached
+             to the id, so the app will think a brand new word is already mastered
+             and hand him a spelling test on something he has never seen.
+   To swap a word out, give the replacement a NEW id and leave the old one deleted. */
 const CONTENT = {
   weeks: [
     {
@@ -318,7 +324,117 @@ function save(s){
   else { mem = s; }
 }
 
-/* ---------- 3. STATE ---------- */
+/* ---------- 3. SYNC (Cloudflare Worker + KV) ----------
+   Local storage stays the source of truth. The cloud is a mirror, so a dead
+   network never blocks or loses a session. Paste your worker URL below, or set
+   it once in the parent panel (which stores it and wins over this value). */
+const SYNC_URL_DEFAULT = "";   // e.g. "https://eng-sync.yourname.workers.dev"
+
+function syncUrl(){
+  let u = SYNC_URL_DEFAULT;
+  if (HAS_LS){ try { u = localStorage.getItem(KEY + "-url") || u; } catch(e){} }
+  return (u || "").replace(/\/+$/, "");
+}
+function setSyncUrl(u){
+  if (HAS_LS){ try { localStorage.setItem(KEY + "-url", (u||"").trim().replace(/\/+$/,"")); } catch(e){} }
+}
+function rnd(n){
+  const abc = "abcdefghijkmnopqrstuvwxyz23456789";   // no l, no 0/1: readable aloud
+  const a = new Uint8Array(n);
+  (self.crypto || window.crypto).getRandomValues(a);
+  return Array.from(a, b => abc[b % abc.length]).join("");
+}
+const newKey = () => rnd(16);   // the shared credential, one per learner
+const newDev = () => rnd(6);    // this phone's shard id, so two devices never collide
+
+/* Rolling local backups: a bad write costs a day, not everything. */
+function backup(){
+  if (!HAS_LS) return;
+  try {
+    const n = (parseInt(localStorage.getItem(KEY + "-bakn") || "0", 10) + 1) % 5;
+    localStorage.setItem(KEY + "-bak" + n, JSON.stringify(S));
+    localStorage.setItem(KEY + "-bakn", String(n));
+  } catch(e){}
+}
+
+/* Union merge, not last-write-wins: two devices in one day must not lose a session. */
+function merge(a, b){
+  if (!b) return a;
+  if (!a) return b;
+  const out = {
+    name: a.name || b.name || "",
+    key: a.key || b.key || null,
+    dev: a.dev || b.dev || null,
+    started: (a.started && b.started) ? (a.started < b.started ? a.started : b.started) : (a.started || b.started),
+    xp: Math.max(a.xp || 0, b.xp || 0),
+    best: Math.max(a.best || 0, b.best || 0),
+    streak: Math.max(a.streak || 0, b.streak || 0),
+    week: Math.max(a.week || 1, b.week || 1),
+    badges: Array.from(new Set([...(a.badges || []), ...(b.badges || [])])),
+    dates: Array.from(new Set([...(a.dates || []), ...(b.dates || [])])).sort(),
+    rev: Math.max(a.rev || 0, b.rev || 0) + 1,
+    items: {}
+  };
+  out.last = out.dates.length ? out.dates[out.dates.length - 1] : null;
+  const ids = new Set([...Object.keys(a.items || {}), ...Object.keys(b.items || {})]);
+  ids.forEach(id => {
+    const x = (a.items || {})[id], y = (b.items || {})[id];
+    if (!x || !y){ out.items[id] = x || y; return; }
+    // More attempts means the more recently practised copy: take it whole.
+    const ax = (x.ok || 0) + (x.bad || 0), ay = (y.ok || 0) + (y.bad || 0);
+    const w = ax >= ay ? x : y;
+    out.items[id] = { ...w, seen: !!(x.seen || y.seen) };
+  });
+  return out;
+}
+
+let syncState = { busy:false, at:null, err:null };
+
+async function pull(){
+  const u = syncUrl(); if (!u || !S.key) return false;
+  const r = await fetch(`${u}/p/${S.key}`, { cache:"no-store" });
+  if (r.status === 404) return false;                 // nothing saved yet, fine
+  if (!r.ok) throw new Error("HTTP " + r.status);
+  const remote = await r.json();
+  const before = S.rev || 0;
+  const myDev = S.dev;
+  S = merge(S, remote);
+  S.dev = myDev;
+  save(S);
+  return (remote.rev || 0) !== before;
+}
+async function push(mode){
+  const u = syncUrl(); if (!u || !S.key) return false;
+  const q = mode === "replace" ? "?mode=replace" : "";
+  const r = await fetch(`${u}/p/${S.key}${q}`, {
+    method:"PUT", headers:{ "Content-Type":"application/json" }, body: JSON.stringify(S)
+  });
+  if (!r.ok){
+    const d = await r.json().catch(() => ({}));
+    throw new Error(d.error || ("HTTP " + r.status));
+  }
+  // The server merges and returns the authoritative result: adopt it so the two
+  // sides cannot drift, and so a session made on another device shows up here.
+  const d = await r.json().catch(() => null);
+  if (d && d.state && d.state.items){ const myDev = S.dev; S = d.state; S.dev = myDev; }
+  S.dirty = false; save(S);
+  return true;
+}
+async function trySync(dir, mode){
+  if (!syncUrl() || !S.key || syncState.busy) return false;
+  syncState.busy = true; syncState.err = null;
+  try {
+    const changed = dir === "push" ? await push(mode) : await pull();
+    syncState.at = new Date().toLocaleTimeString("pl-PL", { hour:"2-digit", minute:"2-digit" });
+    return changed;
+  } catch(e){
+    syncState.err = e.message || "błąd";
+    S.dirty = true; save(S);
+    return false;
+  } finally { syncState.busy = false; }
+}
+
+/* ---------- 4. STATE ---------- */
 function today(){
   const d = new Date();
   const p = n => String(n).padStart(2,"0");
@@ -327,18 +443,31 @@ function today(){
 function dayNum(iso){ return Math.round(Date.parse(iso + "T00:00:00Z") / 864e5); }
 function isoOf(dn){ return new Date(dn * 864e5).toISOString().slice(0,10); }
 function fresh(){
-  return { started: today(), week: 1, xp: 0, streak: 0, best: 0,
+  return { name:"", key:null, dev:null, rev:0, dirty:false,
+           started: today(), week: 1, xp: 0, streak: 0, best: 0,
            last: null, dates: [], items: {}, badges: [] };
 }
 let S = load() || fresh();
 if (!S.items) S = fresh();
+// If content was edited so the saved week no longer exists, fall back to the highest
+// week that does, rather than silently serving week 1 content.
+if (!CONTENT.weeks.some(w => w.id === S.week)){
+  const ids = CONTENT.weeks.map(w => w.id);
+  S.week = ids.filter(i => i <= S.week).pop() ?? ids[0];
+  save(S);
+}
 
 function allWords(){ return CONTENT.weeks.flatMap(w => w.words.map(x => ({...x, week:w.id}))); }
 function unlockedWords(){ return allWords().filter(w => w.week <= S.week); }
 function masteredCount(){ return unlockedWords().filter(w => rec(w.id).box >= 3).length; }
 function rec(id){
   if (!S.items[id]) S.items[id] = { box:0, due:0, ok:0, bad:0, seen:false };
-  return S.items[id];
+  const r = S.items[id];
+  // Self-heal old saves: a shorter CFG.intervals would otherwise leave box out of
+  // range, making due = NaN, which never compares <= today, so the word vanishes.
+  if (r.box > CFG.intervals.length - 1) r.box = CFG.intervals.length - 1;
+  if (typeof r.due !== "number" || isNaN(r.due)) r.due = 0;
+  return r;
 }
 
 /* ---------- 4. SESSION BUILDER ---------- */
@@ -453,7 +582,11 @@ function finishSession(){
     const solid = wk.words.filter(w => rec(w.id).box >= 2).length;
     if (solid >= Math.ceil(wk.words.length * 0.8) && S.week < CONTENT.weeks.length) S.week++;
   }
+  S.rev = (S.rev || 0) + 1;
+  S.dirty = true;
   save(S);
+  backup();
+  trySync("push");           // fire and forget: a failure just leaves dirty = true
 }
 function weekDays(){
   const n = new Date(); const dow = (n.getDay() + 6) % 7;
@@ -522,7 +655,7 @@ function screenHome(){
 
   app.innerHTML = board() + `
     <div class="hero">${pitchSVG}
-      <span class="eyebrow">Tydzień ${wk.id} &middot; ${esc(wk.sub)}</span>
+      <span class="eyebrow">${S.name?esc(S.name)+" &middot; ":""}Tydzień ${wk.id} &middot; ${esc(wk.sub)}</span>
       <h1>${esc(wk.title)}</h1>
       <p>${dt ? "Dzisiejszy trening zaliczony. Możesz zagrać jeszcze raz." : "15 minut. Jeden mecz. Zaczynamy?"}</p>
     </div>
@@ -701,8 +834,26 @@ function screenParent(){
       <table class="tbl"><thead><tr><th>EN</th><th>PL</th><th>Status</th><th>Trafienia</th></tr></thead><tbody>${rows}</tbody></table>
     </div>
     <div class="card">
+      <h3>Synchronizacja</h3>
+      <p>Stan: ${syncUrl()
+          ? (syncState.err ? `<b style="color:#FF9DA0">błąd: ${esc(syncState.err)}</b>`
+             : (S.dirty ? `<b style="color:var(--flood)">do wysłania</b>`
+                        : `<b style="color:#6FD8A4">zapisane w chmurze</b>`))
+          + (syncState.at ? ` &middot; ${esc(syncState.at)}` : "")
+          : "wyłączona (brak adresu workera)"}</p>
+      <p style="margin-top:8px">Adres workera:</p>
+      <textarea id="wurl" style="min-height:44px">${esc(syncUrl())}</textarea>
+      <button class="ghost" id="savew">Zapisz adres i połącz</button>
+    </div>
+    <div class="card">
+      <h3>Link dla drugiego urządzenia</h3>
+      <p>Otwórz ten link na innym telefonie, żeby dostać ten sam postęp. Traktuj go jak hasło.</p>
+      <textarea id="share" style="min-height:60px">${esc(location.origin + location.pathname + "#k=" + (S.key||""))}</textarea>
+      <p class="note">Raport dla rodzica / do wysłania: ${syncUrl() ? esc(syncUrl() + "/p/" + (S.key||"") + "/report") : "najpierw ustaw adres workera"}</p>
+    </div>
+    <div class="card">
       <h3>Kopia postępu</h3>
-      <p>Skopiuj ten tekst raz w miesiącu. Wklej i użyj "Wczytaj", jeśli zmienisz telefon lub wyczyścisz przeglądarkę.</p>
+      <p>Awaryjna kopia offline. Skopiuj i zachowaj, albo wklej starą i wczytaj.</p>
       <textarea id="dump">${esc(JSON.stringify(S))}</textarea>
       <button class="ghost" id="imp">Wczytaj z pola powyżej</button>
       ${HAS_LS ? "" : `<p class="note">Uwaga: ta przeglądarka nie zapisuje danych lokalnie, postęp zniknie po zamknięciu karty. Na telefonie po dodaniu do ekranu głównego będzie działać normalnie.</p>`}
@@ -715,18 +866,87 @@ function screenParent(){
     <div class="foot"><button id="back">Wróć</button></div>`;
 
   document.getElementById("back").onclick = screenHome;
+  document.getElementById("savew").onclick = async () => {
+    setSyncUrl(document.getElementById("wurl").value);
+    if (!S.key){ S.key = newKey(); save(S); }
+    boardMsg = "ŁĄCZENIE"; boardTone = "";
+    await trySync("pull");
+    await trySync("push");
+    boardMsg = syncState.err ? "BŁĄD SYNC" : "POŁĄCZONO";
+    boardTone = syncState.err ? "bad" : "good";
+    screenParent();
+  };
   document.getElementById("imp").onclick = () => {
     try { const o = JSON.parse(document.getElementById("dump").value); if (!o.items) throw 0;
-          S = o; save(S); boardMsg = "WCZYTANO"; screenHome(); }
+          // Outrank whatever the server holds, or the restore gets merged away.
+          o.rev = Math.max(o.rev || 0, (S.rev || 0) + 1);
+          S = o; S.dirty = true; save(S); backup(); trySync("push","replace");
+          boardMsg = "WCZYTANO"; screenHome(); }
     catch(e){ boardMsg = "BŁĄD DANYCH"; boardTone = "bad"; screenParent(); }
   };
   document.getElementById("rst").onclick = () => {
-    if (confirm("Usunąć cały postęp?")){ S = fresh(); save(S); screenHome(); }
+    if (confirm("Usunąć cały postęp?")){
+      const k = S.key, n = S.name, dv = S.dev;
+      S = fresh(); S.key = k; S.name = n; S.dev = dv; S.rev = 1; S.dirty = true;
+      save(S); backup(); trySync("push","replace"); screenName();
+    }
   };
 }
 
-/* ---------- 9. GO ---------- */
-screenHome();
+function screenName(){
+  app.innerHTML = board() + `
+    <div class="hero">${pitchSVG}
+      <span class="eyebrow">Zaczynamy</span>
+      <h1>Jak się nazywasz?</h1>
+      <p>Samo imię wystarczy. Będzie na tablicy wyników.</p>
+    </div>
+    <input class="typed" id="nm" maxlength="18" autocomplete="off" placeholder="imię">
+    <button class="cta" id="ok">Dalej<span class="cta-sub">gramy</span></button>`;
+  const inp = document.getElementById("nm");
+  inp.value = S.name || "";
+  inp.focus();
+  const go = () => {
+    const v = inp.value.trim();
+    if (!v) { inp.focus(); return; }
+    S.name = v.slice(0,18);
+    if (!S.key) S.key = newKey();
+    if (!S.dev) S.dev = newDev();
+    S.rev = (S.rev || 0) + 1;
+    save(S);
+    if (location.hash !== "#k=" + S.key) location.hash = "k=" + S.key;
+    trySync("push");
+    screenHome();
+  };
+  inp.onkeydown = e => { if (e.key === "Enter") go(); };
+  document.getElementById("ok").onclick = go;
+}
+
+/* ---------- 10. BOOT ---------- */
+async function boot(){
+  // A key in the URL is how a second device joins: adopt it and pull that history.
+  const m = (location.hash || "").match(/k=([a-z2-9]{12,32})/);
+  if (m && m[1] !== S.key){
+    S.key = m[1];
+    save(S);
+    boardMsg = "ŁĄCZENIE";
+    screenHome();
+    await trySync("pull");
+  }
+  if (!S.name){ screenName(); return; }
+  if (!S.key){ S.key = newKey(); save(S); }
+  if (!S.dev){ S.dev = newDev(); save(S); }
+  if (location.hash !== "#k=" + S.key) location.hash = "k=" + S.key;
+
+  screenHome();
+  if (syncUrl()){
+    await trySync("pull");
+    if (S.dirty) await trySync("push");
+    screenHome();
+  }
+}
+boot();
+window.addEventListener("online", () => { if (S.dirty) trySync("push"); });
+
 </script>
 </body>
 </html>
