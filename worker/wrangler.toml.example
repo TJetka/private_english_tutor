@@ -1,0 +1,7 @@
+name = "eng-sync"
+main = "index.mjs"
+compatibility_date = "2026-09-01"
+
+[[kv_namespaces]]
+binding = "PROGRESS"
+id = "REPLACE_WITH_EXISTING_PROGRESS_NAMESPACE_ID"

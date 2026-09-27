@@ -1,0 +1,308 @@
+{
+  "id": "u03",
+  "title": "Our classroom",
+  "pages": [
+    22,
+    27
+  ],
+  "provenance": {
+    "preparedOn": "2026-09-27",
+    "preparedFromGit": "59257ca",
+    "source": "English for Everyone Junior: Beginner’s Course, First American Edition (2020)",
+    "sourceSha256": "4dcff56a64cb95ee2e0d0814d2a88b68fdc77377b2fd763ff79e668c1fb8b470",
+    "method": "Original practice adapted to the learning objectives of the supplied book; no page scans or recordings distributed.",
+    "reviewStatus": "parent-review-required"
+  },
+  "grammar": "Let’s + czynność to zaproszenie do wspólnego działania: Let’s count. Przy więcej niż jednej rzeczy do wielu rzeczowników dodajemy -s: one book, two books. To reguła dla tych przykładów; nie wszystkie rzeczowniki tworzą liczbę mnogą tak samo.",
+  "items": [
+    {
+      "id": "dk-u03-write",
+      "revision": 1,
+      "type": "word",
+      "en": "write",
+      "pl": "pisać",
+      "skill": "activities",
+      "cue": "✍️"
+    },
+    {
+      "id": "dk-u03-read",
+      "revision": 1,
+      "type": "word",
+      "en": "read",
+      "pl": "czytać",
+      "skill": "activities",
+      "cue": "📖"
+    },
+    {
+      "id": "dk-u03-count",
+      "revision": 1,
+      "type": "word",
+      "en": "count",
+      "pl": "liczyć",
+      "skill": "activities",
+      "cue": "1 2 3"
+    },
+    {
+      "id": "dk-u03-play",
+      "revision": 1,
+      "type": "word",
+      "en": "play",
+      "pl": "grać / bawić się",
+      "skill": "activities",
+      "cue": "⚽"
+    },
+    {
+      "id": "dk-u03-spell",
+      "revision": 1,
+      "type": "word",
+      "en": "spell",
+      "pl": "literować",
+      "skill": "activities",
+      "cue": "A B C"
+    },
+    {
+      "id": "dk-u03-paint",
+      "revision": 1,
+      "type": "word",
+      "en": "paint",
+      "pl": "malować",
+      "skill": "activities",
+      "cue": "🖌️"
+    },
+    {
+      "id": "dk-u03-draw",
+      "revision": 1,
+      "type": "word",
+      "en": "draw",
+      "pl": "rysować",
+      "skill": "activities",
+      "cue": "✏️"
+    },
+    {
+      "id": "dk-u03-eleven",
+      "revision": 1,
+      "type": "word",
+      "en": "eleven",
+      "pl": "jedenaście",
+      "skill": "numbers-20",
+      "cue": "11"
+    },
+    {
+      "id": "dk-u03-twelve",
+      "revision": 1,
+      "type": "word",
+      "en": "twelve",
+      "pl": "dwanaście",
+      "skill": "numbers-20",
+      "cue": "12"
+    },
+    {
+      "id": "dk-u03-thirteen",
+      "revision": 1,
+      "type": "word",
+      "en": "thirteen",
+      "pl": "trzynaście",
+      "skill": "numbers-20",
+      "cue": "13"
+    },
+    {
+      "id": "dk-u03-fourteen",
+      "revision": 1,
+      "type": "word",
+      "en": "fourteen",
+      "pl": "czternaście",
+      "skill": "numbers-20",
+      "cue": "14"
+    },
+    {
+      "id": "dk-u03-fifteen",
+      "revision": 1,
+      "type": "word",
+      "en": "fifteen",
+      "pl": "piętnaście",
+      "skill": "numbers-20",
+      "cue": "15"
+    },
+    {
+      "id": "dk-u03-sixteen",
+      "revision": 1,
+      "type": "word",
+      "en": "sixteen",
+      "pl": "szesnaście",
+      "skill": "numbers-20",
+      "cue": "16"
+    },
+    {
+      "id": "dk-u03-seventeen",
+      "revision": 1,
+      "type": "word",
+      "en": "seventeen",
+      "pl": "siedemnaście",
+      "skill": "numbers-20",
+      "cue": "17"
+    },
+    {
+      "id": "dk-u03-eighteen",
+      "revision": 1,
+      "type": "word",
+      "en": "eighteen",
+      "pl": "osiemnaście",
+      "skill": "numbers-20",
+      "cue": "18"
+    },
+    {
+      "id": "dk-u03-nineteen",
+      "revision": 1,
+      "type": "word",
+      "en": "nineteen",
+      "pl": "dziewiętnaście",
+      "skill": "numbers-20",
+      "cue": "19"
+    },
+    {
+      "id": "dk-u03-twenty",
+      "revision": 1,
+      "type": "word",
+      "en": "twenty",
+      "pl": "dwadzieścia",
+      "skill": "numbers-20",
+      "cue": "20"
+    },
+    {
+      "id": "dk-u03-lets-count",
+      "revision": 1,
+      "type": "sentence",
+      "en": "Let's count.",
+      "pl": "Policzmy.",
+      "skill": "lets",
+      "gap": {
+        "q": "Let's ___.",
+        "a": "count",
+        "options": [
+          "count",
+          "read",
+          "paint"
+        ]
+      }
+    },
+    {
+      "id": "dk-u03-lets-read",
+      "revision": 1,
+      "type": "sentence",
+      "en": "Let's read.",
+      "pl": "Poczytajmy.",
+      "skill": "lets",
+      "gap": {
+        "q": "___ read.",
+        "a": "Let's",
+        "options": [
+          "Let's",
+          "Let",
+          "We is"
+        ]
+      }
+    },
+    {
+      "id": "dk-u03-lets-play",
+      "revision": 1,
+      "type": "sentence",
+      "en": "Let's play.",
+      "pl": "Zagrajmy.",
+      "skill": "lets",
+      "gap": {
+        "q": "Let's ___.",
+        "a": "play",
+        "options": [
+          "play",
+          "draw",
+          "write"
+        ]
+      }
+    },
+    {
+      "id": "dk-u03-lets-draw",
+      "revision": 1,
+      "type": "sentence",
+      "en": "Let's draw.",
+      "pl": "Porysujmy.",
+      "skill": "lets",
+      "gap": {
+        "q": "___ draw.",
+        "a": "Let's",
+        "options": [
+          "Let's",
+          "Let",
+          "I is"
+        ]
+      }
+    },
+    {
+      "id": "dk-u03-two-books",
+      "revision": 1,
+      "type": "sentence",
+      "en": "Two books.",
+      "pl": "Dwie książki.",
+      "skill": "plurals",
+      "gap": {
+        "q": "Two ___.",
+        "a": "books",
+        "options": [
+          "books",
+          "book",
+          "a book"
+        ]
+      }
+    },
+    {
+      "id": "dk-u03-one-book",
+      "revision": 1,
+      "type": "sentence",
+      "en": "One book.",
+      "pl": "Jedna książka.",
+      "skill": "plurals",
+      "gap": {
+        "q": "One ___.",
+        "a": "book",
+        "options": [
+          "book",
+          "books",
+          "two"
+        ]
+      }
+    },
+    {
+      "id": "dk-u03-three-tablets",
+      "revision": 1,
+      "type": "sentence",
+      "en": "Three tablets.",
+      "pl": "Trzy tablety.",
+      "skill": "plurals",
+      "gap": {
+        "q": "Three ___.",
+        "a": "tablets",
+        "options": [
+          "tablets",
+          "tablet",
+          "a tablet"
+        ]
+      }
+    },
+    {
+      "id": "dk-u03-twelve-books",
+      "revision": 1,
+      "type": "sentence",
+      "en": "Twelve books.",
+      "pl": "Dwanaście książek.",
+      "skill": "plurals",
+      "gap": {
+        "q": "Twelve ___.",
+        "a": "books",
+        "options": [
+          "books",
+          "book",
+          "one"
+        ]
+      }
+    }
+  ]
+}

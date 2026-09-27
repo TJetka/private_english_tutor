@@ -3,3 +3,7 @@ __pycache__/
 
 *.pdf
 .DS_Store
+local/
+worker/wrangler.toml
+.wrangler/
+.ruff_cache/

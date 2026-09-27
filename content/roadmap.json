@@ -1,0 +1,352 @@
+{
+  "version": "2026.09-outline.1",
+  "provenance": {
+    "preparedOn": "2026-09-27",
+    "preparedFromGit": "59257ca",
+    "source": "English for Everyone Junior: Beginner’s Course, First American Edition (2020)",
+    "sourceSha256": "4dcff56a64cb95ee2e0d0814d2a88b68fdc77377b2fd763ff79e668c1fb8b470",
+    "method": "Original practice adapted to the learning objectives of the supplied book; no page scans or recordings distributed.",
+    "reviewStatus": "parent-review-required"
+  },
+  "planningRule": "26 book milestones, about 27 calendar weeks including the extra pilot consolidation. Extend rather than compress if recall or motivation is weak. Only book units 1–3 are authored in the app. Later objectives are topic-level proposals, not a verified grammar mapping.",
+  "milestones": [
+    {
+      "id": 1,
+      "bookUnit": 1,
+      "title": "My friends",
+      "pages": [
+        10,
+        15
+      ],
+      "provisionalWeek": 1,
+      "status": "pilot-ready-for-review",
+      "outcome": "Greet someone; introduce yourself; ask name, age and how they are; understand 1–10.",
+      "review": false
+    },
+    {
+      "id": 2,
+      "bookUnit": 2,
+      "title": "At school",
+      "pages": [
+        16,
+        21
+      ],
+      "provisionalWeek": 2,
+      "status": "pilot-ready-for-review",
+      "outcome": "Recognise classroom objects and simple instructions; ask and tell his/her name.",
+      "review": false
+    },
+    {
+      "id": 3,
+      "bookUnit": 3,
+      "title": "Our classroom",
+      "pages": [
+        22,
+        27
+      ],
+      "provisionalWeek": 3,
+      "status": "pilot-ready-for-review",
+      "outcome": "Invite an activity with Let’s; understand 11–20; use regular plurals with known objects.",
+      "review": false
+    },
+    {
+      "id": 4,
+      "bookUnit": 4,
+      "title": "My things",
+      "pages": [
+        28,
+        37
+      ],
+      "provisionalWeek": 5,
+      "status": "outline-only",
+      "outcome": "Name personal belongings and identify them in short exchanges.",
+      "review": false
+    },
+    {
+      "id": 5,
+      "bookUnit": 5,
+      "title": "Our favorite animals",
+      "pages": [
+        38,
+        47
+      ],
+      "provisionalWeek": 6,
+      "status": "outline-only",
+      "outcome": "Name familiar animals and describe simple distinguishing features.",
+      "review": false
+    },
+    {
+      "id": 6,
+      "bookUnit": 6,
+      "title": "This is my family",
+      "pages": [
+        48,
+        57
+      ],
+      "provisionalWeek": 7,
+      "status": "outline-only",
+      "outcome": "Introduce family members and describe who is in a family picture.",
+      "review": false
+    },
+    {
+      "id": 7,
+      "bookUnit": 7,
+      "title": "This is my room",
+      "pages": [
+        58,
+        67
+      ],
+      "provisionalWeek": 8,
+      "status": "outline-only",
+      "outcome": "Name room objects and describe a simple scene with support.",
+      "review": false
+    },
+    {
+      "id": 8,
+      "bookUnit": 8,
+      "title": "Review: This is me",
+      "pages": [
+        68,
+        69
+      ],
+      "provisionalWeek": 9,
+      "status": "outline-only",
+      "outcome": "Combine introductions, family and familiar possessions in a personal mini-presentation.",
+      "review": true
+    },
+    {
+      "id": 9,
+      "bookUnit": 9,
+      "title": "At the fair",
+      "pages": [
+        70,
+        77
+      ],
+      "provisionalWeek": 10,
+      "status": "outline-only",
+      "outcome": "Use familiar language in a fairground scene, including simple questions and responses.",
+      "review": false
+    },
+    {
+      "id": 10,
+      "bookUnit": 10,
+      "title": "Our pets",
+      "pages": [
+        78,
+        87
+      ],
+      "provisionalWeek": 11,
+      "status": "outline-only",
+      "outcome": "Talk about pets and notice relevant similarities and differences.",
+      "review": false
+    },
+    {
+      "id": 11,
+      "bookUnit": 11,
+      "title": "My body",
+      "pages": [
+        88,
+        97
+      ],
+      "provisionalWeek": 12,
+      "status": "outline-only",
+      "outcome": "Name body parts and follow simple actions or descriptions.",
+      "review": false
+    },
+    {
+      "id": 12,
+      "bookUnit": 12,
+      "title": "Our town",
+      "pages": [
+        98,
+        107
+      ],
+      "provisionalWeek": 13,
+      "status": "outline-only",
+      "outcome": "Identify familiar places in a town and talk about a simple map.",
+      "review": false
+    },
+    {
+      "id": 13,
+      "bookUnit": 13,
+      "title": "My home",
+      "pages": [
+        108,
+        117
+      ],
+      "provisionalWeek": 14,
+      "status": "outline-only",
+      "outcome": "Name rooms and familiar things at home; describe a home scene.",
+      "review": false
+    },
+    {
+      "id": 14,
+      "bookUnit": 14,
+      "title": "Review: Where I live",
+      "pages": [
+        118,
+        119
+      ],
+      "provisionalWeek": 15,
+      "status": "outline-only",
+      "outcome": "Use town and home vocabulary in a short personal description and conversation.",
+      "review": true
+    },
+    {
+      "id": 15,
+      "bookUnit": 15,
+      "title": "On the farm",
+      "pages": [
+        120,
+        129
+      ],
+      "provisionalWeek": 16,
+      "status": "outline-only",
+      "outcome": "Name farm animals and objects; understand and describe a farm scene.",
+      "review": false
+    },
+    {
+      "id": 16,
+      "bookUnit": 16,
+      "title": "Sports",
+      "pages": [
+        130,
+        141
+      ],
+      "provisionalWeek": 17,
+      "status": "outline-only",
+      "outcome": "Talk about sports and participate in a short exchange connected to soccer.",
+      "review": false
+    },
+    {
+      "id": 17,
+      "bookUnit": 17,
+      "title": "At the food market",
+      "pages": [
+        142,
+        151
+      ],
+      "provisionalWeek": 18,
+      "status": "outline-only",
+      "outcome": "Name foods and practise a simple food-market exchange.",
+      "review": false
+    },
+    {
+      "id": 18,
+      "bookUnit": 18,
+      "title": "At the toy store",
+      "pages": [
+        152,
+        161
+      ],
+      "provisionalWeek": 19,
+      "status": "outline-only",
+      "outcome": "Name toys and use language in a pretend shop or collection activity.",
+      "review": false
+    },
+    {
+      "id": 19,
+      "bookUnit": 19,
+      "title": "Our hobbies",
+      "pages": [
+        162,
+        169
+      ],
+      "provisionalWeek": 20,
+      "status": "outline-only",
+      "outcome": "Talk about hobbies, making room for Minecraft and maths with reviewed language.",
+      "review": false
+    },
+    {
+      "id": 20,
+      "bookUnit": 20,
+      "title": "Review: What I like",
+      "pages": [
+        170,
+        171
+      ],
+      "provisionalWeek": 21,
+      "status": "outline-only",
+      "outcome": "Combine sports, food, toys and hobbies in a short account of preferences.",
+      "review": true
+    },
+    {
+      "id": 21,
+      "bookUnit": 21,
+      "title": "Our party clothes",
+      "pages": [
+        172,
+        181
+      ],
+      "provisionalWeek": 22,
+      "status": "outline-only",
+      "outcome": "Name clothes and describe what people are wearing in a supported scene.",
+      "review": false
+    },
+    {
+      "id": 22,
+      "bookUnit": 22,
+      "title": "Our day at the beach",
+      "pages": [
+        182,
+        189
+      ],
+      "provisionalWeek": 23,
+      "status": "outline-only",
+      "outcome": "Use beach vocabulary and describe or respond to a familiar holiday scene.",
+      "review": false
+    },
+    {
+      "id": 23,
+      "bookUnit": 23,
+      "title": "Lunchtime",
+      "pages": [
+        190,
+        199
+      ],
+      "provisionalWeek": 24,
+      "status": "outline-only",
+      "outcome": "Use food and mealtime language in a short practical interaction.",
+      "review": false
+    },
+    {
+      "id": 24,
+      "bookUnit": 24,
+      "title": "At the park",
+      "pages": [
+        200,
+        207
+      ],
+      "provisionalWeek": 25,
+      "status": "outline-only",
+      "outcome": "Talk about activities in a park using vocabulary and structures confirmed in the unit.",
+      "review": false
+    },
+    {
+      "id": 25,
+      "bookUnit": 25,
+      "title": "My day",
+      "pages": [
+        208,
+        219
+      ],
+      "provisionalWeek": 26,
+      "status": "outline-only",
+      "outcome": "Describe a simple daily routine and connect familiar activities.",
+      "review": false
+    },
+    {
+      "id": 26,
+      "bookUnit": 26,
+      "title": "Review: Me and my day",
+      "pages": [
+        220,
+        221
+      ],
+      "provisionalWeek": 27,
+      "status": "outline-only",
+      "outcome": "Create a final personal account and revisit gaps across the course, including an oral check.",
+      "review": true
+    }
+  ]
+}

@@ -1,0 +1,170 @@
+{
+  "schemaVersion": 1,
+  "courseId": "dk-junior-pilot",
+  "version": "2026.09-pilot.1",
+  "status": "parent-review-required",
+  "provenance": {
+    "preparedOn": "2026-09-27",
+    "preparedFromGit": "59257ca",
+    "source": "English for Everyone Junior: Beginner’s Course, First American Edition (2020)",
+    "sourceSha256": "4dcff56a64cb95ee2e0d0814d2a88b68fdc77377b2fd763ff79e668c1fb8b470",
+    "method": "Original practice adapted to the learning objectives of the supplied book; no page scans or recordings distributed.",
+    "reviewStatus": "parent-review-required"
+  },
+  "interests": [
+    "soccer",
+    "minecraft",
+    "maths"
+  ],
+  "unitFiles": [
+    "units/u01.json",
+    "units/u02.json",
+    "units/u03.json"
+  ],
+  "weeks": [
+    {
+      "id": 1,
+      "title": "Poznajemy drużynę",
+      "units": [
+        "u01"
+      ],
+      "reviewOnly": false,
+      "outcomes": [
+        "Przedstawiam się i pytam o imię.",
+        "Pytam o samopoczucie i wiek.",
+        "Rozumiem liczby 1–10."
+      ],
+      "parentBrief": "30 min: 5 min sprawdzenia punktu wyjścia; 10 min z książką str. 10–15 i audio; 10 min dialogów i jednej rundy; 5 min rozmowy o tym, co było trudne. Zapisz pierwszą obserwację w panelu.",
+      "daily": [
+        "Imię i powitania. Po treningu przedstaw się jak nowy gracz drużyny.",
+        "Samopoczucie i liczby. Policz pięć narysowanych piłek.",
+        "Pytanie o wiek. Odpowiedz bez patrzenia w ekran.",
+        "Liczby 1–10. Powiedz wynik prostego dodawania po angielsku.",
+        "Powtórka. Krótka rozmowa o imieniu, samopoczuciu i wieku."
+      ],
+      "speaking": [
+        "What’s your name?",
+        "How are you?",
+        "How old are you?"
+      ],
+      "offlineMission": "Narysuj kartę zawodnika: imię i numer 1–10. Powiedz imię i numer po angielsku.",
+      "parentCheck": [
+        "Bez wzoru przedstawia się i pyta o imię.",
+        "Rozpoznaje 4 z 5 wylosowanych liczb 1–10.",
+        "Odpowiada na pytanie o wiek."
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Szkoła naszej drużyny",
+      "units": [
+        "u02"
+      ],
+      "reviewOnly": false,
+      "outcomes": [
+        "Rozpoznaję szkolne przedmioty i miejsca.",
+        "Reaguję na proste polecenia.",
+        "Odróżniam his name od her name."
+      ],
+      "parentBrief": "30 min: 5 min przypomnienia dialogu z tygodnia 1; 10 min str. 16–21 i audio; 10 min poleceń z prawdziwą książką i przedstawiania dwóch wymyślonych graczy; 5 min obserwacji. Nie wymagaj opanowania wszystkich 24 słów w tydzień.",
+      "daily": [
+        "Rzeczy w szkole. Pokaż prawdziwą książkę i tablet.",
+        "Polecenia. Wykonaj open, close i listen.",
+        "His / her. Przedstaw Leo i Mię jako nowych graczy.",
+        "Więcej poleceń. Poproś rodzica: sit down, stand up.",
+        "Pomieszana powtórka i rozmowa z tygodnia 1."
+      ],
+      "speaking": [
+        "What’s his name?",
+        "What’s her name?",
+        "Open your book."
+      ],
+      "offlineMission": "Zbuduj albo narysuj klasę w stylu Minecraft. Wskaż książkę, tablicę i szafkę; korzystaj z książki jako wzoru.",
+      "parentCheck": [
+        "Wykonuje 4 z 5 znanych poleceń bez tłumaczenia.",
+        "Dobiera his/her do dwóch przedstawionych osób.",
+        "Po przerwie pamięta pytanie o wiek."
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Budujemy i liczymy",
+      "units": [
+        "u03"
+      ],
+      "reviewOnly": false,
+      "outcomes": [
+        "Zapraszam do czynności używając Let’s.",
+        "Rozpoznaję liczby 11–20.",
+        "Rozróżniam one book i two books."
+      ],
+      "parentBrief": "30 min: 5 min poleceń z tygodnia 2; 10 min str. 22–27 i audio; 10 min liczenia, zaproszeń do czynności i liczenia prawdziwych przedmiotów; 5 min notatki. Wróć do 1–10, jeśli liczby 11–20 są za trudne.",
+      "daily": [
+        "Czynności. Po treningu pokaż read, write lub draw.",
+        "Let’s. Zaproś rodzica do liczenia i rysowania.",
+        "Liczby 11–20. Policz klocki lub narysowane kwadraty.",
+        "Jedna czy wiele rzeczy? One book, two books.",
+        "Powtórka poleceń, zaproszeń i liczb."
+      ],
+      "speaking": [
+        "Let’s count.",
+        "Let’s play.",
+        "One book. Two books."
+      ],
+      "offlineMission": "Narysuj boisko z 11 kwadratami zawodników. Policz je po angielsku, potem dorysuj drugi zestaw do 20.",
+      "parentCheck": [
+        "Rozumie 4 z 5 liczb 11–20 po usłyszeniu.",
+        "Sam tworzy dwa zaproszenia Let’s… .",
+        "Rozróżnia liczbę pojedynczą i mnogą w znanych przykładach."
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Finał: pokaż, co pamiętasz",
+      "units": [
+        "u01",
+        "u02",
+        "u03"
+      ],
+      "reviewOnly": true,
+      "outcomes": [
+        "Używam znanych zwrotów bez wyboru odpowiedzi.",
+        "Wracam do trudnych słów po kilku dniach.",
+        "Wspólnie wybieramy tempo dalszej nauki."
+      ],
+      "parentBrief": "30 min: 10 min krótkich rozmów bez ekranu; 10 min książki i poleceń, które sprawiały trudność; 5 min ulubionej misji; 5 min decyzji o następnym tygodniu. Słowa jeszcze niewprowadzone zostaw jako zaległy materiał do omówienia, nie jako błąd dziecka.",
+      "daily": [
+        "Przedstaw się jako kapitan drużyny.",
+        "Wykonaj pięć znanych poleceń bez polskiego tłumaczenia.",
+        "Policz klocki 1–20; wróć do trudnego zakresu.",
+        "Użyj Let’s… i policz jedną oraz kilka rzeczy.",
+        "Krótki sprawdzian z rodzicem i wybór ulubionej misji."
+      ],
+      "speaking": [
+        "What’s your name? How old are you?",
+        "What’s her name?",
+        "Let’s count. Three books."
+      ],
+      "offlineMission": "Wymyśl mini-szkołę dla drużyny: przedstaw dwie osoby, daj dwa polecenia i policz przedmioty. Możesz użyć rysunku lub klocków.",
+      "parentCheck": [
+        "Rozmowa: imię, samopoczucie, wiek bez gotowych opcji.",
+        "Pięć poleceń, dwie osoby his/her i dwa Let’s… .",
+        "Próba liczb 1–20 i znanej liczby mnogiej po przerwie.",
+        "Czy chce kontynuować? Co ułatwić?"
+      ]
+    }
+  ],
+  "skillNames": {
+    "greetings": "Powitania",
+    "introductions": "Przedstawianie się",
+    "age": "Wiek",
+    "numbers-10": "Liczby 1–10",
+    "school": "Szkoła",
+    "instructions": "Polecenia",
+    "his-her": "His / her",
+    "activities": "Czynności",
+    "lets": "Let’s…",
+    "numbers-20": "Liczby 11–20",
+    "plurals": "Liczba mnoga"
+  }
+}

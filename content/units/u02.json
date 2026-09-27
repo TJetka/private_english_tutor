@@ -1,0 +1,371 @@
+{
+  "id": "u02",
+  "title": "At school",
+  "pages": [
+    16,
+    21
+  ],
+  "provenance": {
+    "preparedOn": "2026-09-27",
+    "preparedFromGit": "59257ca",
+    "source": "English for Everyone Junior: Beginner’s Course, First American Edition (2020)",
+    "sourceSha256": "4dcff56a64cb95ee2e0d0814d2a88b68fdc77377b2fd763ff79e668c1fb8b470",
+    "method": "Original practice adapted to the learning objectives of the supplied book; no page scans or recordings distributed.",
+    "reviewStatus": "parent-review-required"
+  },
+  "grammar": "His name… = jego imię…; Her name… = jej imię… . Polecenie zaczynamy od czynności: Open your book. Sit down. Znaczenie zdania po polsku podpowiada, o którą osobę lub czynność chodzi.",
+  "items": [
+    {
+      "id": "dk-u02-playground",
+      "revision": 1,
+      "type": "word",
+      "en": "playground",
+      "pl": "plac zabaw",
+      "skill": "school",
+      "cue": "🛝"
+    },
+    {
+      "id": "dk-u02-numbers",
+      "revision": 1,
+      "type": "word",
+      "en": "numbers",
+      "pl": "liczby",
+      "skill": "school",
+      "cue": "123"
+    },
+    {
+      "id": "dk-u02-letters",
+      "revision": 1,
+      "type": "word",
+      "en": "letters",
+      "pl": "litery",
+      "skill": "school",
+      "cue": "ABC"
+    },
+    {
+      "id": "dk-u02-teacher",
+      "revision": 1,
+      "type": "word",
+      "en": "teacher",
+      "pl": "nauczyciel / nauczycielka",
+      "skill": "school",
+      "cue": "🧑‍🏫"
+    },
+    {
+      "id": "dk-u02-board",
+      "revision": 1,
+      "type": "word",
+      "en": "board",
+      "pl": "tablica",
+      "skill": "school",
+      "cue": ""
+    },
+    {
+      "id": "dk-u02-classmate",
+      "revision": 1,
+      "type": "word",
+      "en": "classmate",
+      "pl": "kolega / koleżanka z klasy",
+      "skill": "school",
+      "cue": ""
+    },
+    {
+      "id": "dk-u02-alphabet",
+      "revision": 1,
+      "type": "word",
+      "en": "alphabet",
+      "pl": "alfabet",
+      "skill": "school",
+      "cue": "ABC…Z"
+    },
+    {
+      "id": "dk-u02-tablet",
+      "revision": 1,
+      "type": "word",
+      "en": "tablet",
+      "pl": "tablet",
+      "skill": "school",
+      "cue": "📱"
+    },
+    {
+      "id": "dk-u02-cupboard",
+      "revision": 1,
+      "type": "word",
+      "en": "cupboard",
+      "pl": "szafka",
+      "skill": "school",
+      "cue": ""
+    },
+    {
+      "id": "dk-u02-book",
+      "revision": 1,
+      "type": "word",
+      "en": "book",
+      "pl": "książka",
+      "skill": "school",
+      "cue": "📖"
+    },
+    {
+      "id": "dk-u02-look",
+      "revision": 1,
+      "type": "word",
+      "en": "look",
+      "pl": "spójrz",
+      "skill": "instructions",
+      "cue": "👀"
+    },
+    {
+      "id": "dk-u02-find",
+      "revision": 1,
+      "type": "word",
+      "en": "find",
+      "pl": "znajdź",
+      "skill": "instructions",
+      "cue": "🔎"
+    },
+    {
+      "id": "dk-u02-listen",
+      "revision": 1,
+      "type": "word",
+      "en": "listen",
+      "pl": "posłuchaj",
+      "skill": "instructions",
+      "cue": "👂"
+    },
+    {
+      "id": "dk-u02-show",
+      "revision": 1,
+      "type": "word",
+      "en": "show",
+      "pl": "pokaż",
+      "skill": "instructions",
+      "cue": "👉"
+    },
+    {
+      "id": "dk-u02-add",
+      "revision": 1,
+      "type": "word",
+      "en": "add",
+      "pl": "dodaj",
+      "skill": "instructions",
+      "cue": "2 + 3"
+    },
+    {
+      "id": "dk-u02-open",
+      "revision": 1,
+      "type": "word",
+      "en": "open",
+      "pl": "otwórz",
+      "skill": "instructions",
+      "cue": "📖"
+    },
+    {
+      "id": "dk-u02-close",
+      "revision": 1,
+      "type": "word",
+      "en": "close",
+      "pl": "zamknij",
+      "skill": "instructions",
+      "cue": "📕"
+    },
+    {
+      "id": "dk-u02-pick-up",
+      "revision": 1,
+      "type": "word",
+      "en": "pick up",
+      "pl": "podnieś",
+      "skill": "instructions",
+      "cue": ""
+    },
+    {
+      "id": "dk-u02-ask",
+      "revision": 1,
+      "type": "word",
+      "en": "ask",
+      "pl": "zapytaj",
+      "skill": "instructions",
+      "cue": "❓"
+    },
+    {
+      "id": "dk-u02-answer",
+      "revision": 1,
+      "type": "word",
+      "en": "answer",
+      "pl": "odpowiedz",
+      "skill": "instructions",
+      "cue": "💬"
+    },
+    {
+      "id": "dk-u02-sit-down",
+      "revision": 1,
+      "type": "word",
+      "en": "sit down",
+      "pl": "usiądź",
+      "skill": "instructions",
+      "cue": "🪑"
+    },
+    {
+      "id": "dk-u02-stand-up",
+      "revision": 1,
+      "type": "word",
+      "en": "stand up",
+      "pl": "wstań",
+      "skill": "instructions",
+      "cue": "🧍"
+    },
+    {
+      "id": "dk-u02-his",
+      "revision": 1,
+      "type": "word",
+      "en": "his",
+      "pl": "jego",
+      "skill": "his-her",
+      "cue": ""
+    },
+    {
+      "id": "dk-u02-her",
+      "revision": 1,
+      "type": "word",
+      "en": "her",
+      "pl": "jej",
+      "skill": "his-her",
+      "cue": ""
+    },
+    {
+      "id": "dk-u02-his-name",
+      "revision": 1,
+      "type": "sentence",
+      "en": "His name is Leo.",
+      "pl": "On ma na imię Leo.",
+      "skill": "his-her",
+      "gap": {
+        "q": "___ name is Leo.",
+        "a": "His",
+        "options": [
+          "His",
+          "Her",
+          "He"
+        ]
+      }
+    },
+    {
+      "id": "dk-u02-her-name",
+      "revision": 1,
+      "type": "sentence",
+      "en": "Her name is Mia.",
+      "pl": "Ona ma na imię Mia.",
+      "skill": "his-her",
+      "gap": {
+        "q": "___ name is Mia.",
+        "a": "Her",
+        "options": [
+          "Her",
+          "His",
+          "She"
+        ]
+      }
+    },
+    {
+      "id": "dk-u02-his-question",
+      "revision": 1,
+      "type": "sentence",
+      "en": "What's his name?",
+      "pl": "Jak on ma na imię?",
+      "skill": "his-her",
+      "gap": {
+        "q": "What's ___ name?",
+        "a": "his",
+        "options": [
+          "his",
+          "her",
+          "he"
+        ]
+      }
+    },
+    {
+      "id": "dk-u02-her-question",
+      "revision": 1,
+      "type": "sentence",
+      "en": "What's her name?",
+      "pl": "Jak ona ma na imię?",
+      "skill": "his-her",
+      "gap": {
+        "q": "What's ___ name?",
+        "a": "her",
+        "options": [
+          "her",
+          "his",
+          "she"
+        ]
+      }
+    },
+    {
+      "id": "dk-u02-open-book",
+      "revision": 1,
+      "type": "sentence",
+      "en": "Open your book.",
+      "pl": "Otwórz swoją książkę.",
+      "skill": "instructions",
+      "gap": {
+        "q": "___ your book.",
+        "a": "Open",
+        "options": [
+          "Open",
+          "Close",
+          "Listen"
+        ]
+      }
+    },
+    {
+      "id": "dk-u02-close-book",
+      "revision": 1,
+      "type": "sentence",
+      "en": "Close your book.",
+      "pl": "Zamknij swoją książkę.",
+      "skill": "instructions",
+      "gap": {
+        "q": "___ your book.",
+        "a": "Close",
+        "options": [
+          "Close",
+          "Open",
+          "Ask"
+        ]
+      }
+    },
+    {
+      "id": "dk-u02-sit",
+      "revision": 1,
+      "type": "sentence",
+      "en": "Sit down.",
+      "pl": "Usiądź.",
+      "skill": "instructions",
+      "gap": {
+        "q": "Sit ___.",
+        "a": "down",
+        "options": [
+          "down",
+          "up",
+          "open"
+        ]
+      }
+    },
+    {
+      "id": "dk-u02-stand",
+      "revision": 1,
+      "type": "sentence",
+      "en": "Stand up.",
+      "pl": "Wstań.",
+      "skill": "instructions",
+      "gap": {
+        "q": "Stand ___.",
+        "a": "up",
+        "options": [
+          "up",
+          "down",
+          "close"
+        ]
+      }
+    }
+  ]
+}

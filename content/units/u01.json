@@ -1,0 +1,290 @@
+{
+  "id": "u01",
+  "title": "My friends",
+  "pages": [
+    10,
+    15
+  ],
+  "provenance": {
+    "preparedOn": "2026-09-27",
+    "preparedFromGit": "59257ca",
+    "source": "English for Everyone Junior: Beginner’s Course, First American Edition (2020)",
+    "sourceSha256": "4dcff56a64cb95ee2e0d0814d2a88b68fdc77377b2fd763ff79e668c1fb8b470",
+    "method": "Original practice adapted to the learning objectives of the supplied book; no page scans or recordings distributed.",
+    "reviewStatus": "parent-review-required"
+  },
+  "grammar": "Przedstaw się: I’m… lub My name is… / My name’s… . O wiek pytamy How old are you? O wieku mówimy I’m ten, nie I have ten. How are you? pyta o samopoczucie.",
+  "items": [
+    {
+      "id": "dk-u01-hello",
+      "revision": 1,
+      "type": "word",
+      "en": "hello",
+      "pl": "cześć",
+      "skill": "greetings",
+      "cue": "👋"
+    },
+    {
+      "id": "dk-u01-hi",
+      "revision": 1,
+      "type": "word",
+      "en": "hi",
+      "pl": "hej",
+      "skill": "greetings",
+      "cue": "👋"
+    },
+    {
+      "id": "dk-u01-name",
+      "revision": 1,
+      "type": "word",
+      "en": "name",
+      "pl": "imię",
+      "skill": "greetings",
+      "cue": "🏷️"
+    },
+    {
+      "id": "dk-u01-fine",
+      "revision": 1,
+      "type": "word",
+      "en": "fine",
+      "pl": "dobrze (samopoczucie)",
+      "skill": "greetings",
+      "cue": "🙂"
+    },
+    {
+      "id": "dk-u01-thanks",
+      "revision": 1,
+      "type": "word",
+      "en": "thanks",
+      "pl": "dzięki",
+      "skill": "greetings",
+      "cue": "🤝"
+    },
+    {
+      "id": "dk-u01-one",
+      "revision": 1,
+      "type": "word",
+      "en": "one",
+      "pl": "jeden",
+      "skill": "numbers-10",
+      "cue": "1"
+    },
+    {
+      "id": "dk-u01-two",
+      "revision": 1,
+      "type": "word",
+      "en": "two",
+      "pl": "dwa",
+      "skill": "numbers-10",
+      "cue": "2"
+    },
+    {
+      "id": "dk-u01-three",
+      "revision": 1,
+      "type": "word",
+      "en": "three",
+      "pl": "trzy",
+      "skill": "numbers-10",
+      "cue": "3"
+    },
+    {
+      "id": "dk-u01-four",
+      "revision": 1,
+      "type": "word",
+      "en": "four",
+      "pl": "cztery",
+      "skill": "numbers-10",
+      "cue": "4"
+    },
+    {
+      "id": "dk-u01-five",
+      "revision": 1,
+      "type": "word",
+      "en": "five",
+      "pl": "pięć",
+      "skill": "numbers-10",
+      "cue": "5"
+    },
+    {
+      "id": "dk-u01-six",
+      "revision": 1,
+      "type": "word",
+      "en": "six",
+      "pl": "sześć",
+      "skill": "numbers-10",
+      "cue": "6"
+    },
+    {
+      "id": "dk-u01-seven",
+      "revision": 1,
+      "type": "word",
+      "en": "seven",
+      "pl": "siedem",
+      "skill": "numbers-10",
+      "cue": "7"
+    },
+    {
+      "id": "dk-u01-eight",
+      "revision": 1,
+      "type": "word",
+      "en": "eight",
+      "pl": "osiem",
+      "skill": "numbers-10",
+      "cue": "8"
+    },
+    {
+      "id": "dk-u01-nine",
+      "revision": 1,
+      "type": "word",
+      "en": "nine",
+      "pl": "dziewięć",
+      "skill": "numbers-10",
+      "cue": "9"
+    },
+    {
+      "id": "dk-u01-ten",
+      "revision": 1,
+      "type": "word",
+      "en": "ten",
+      "pl": "dziesięć",
+      "skill": "numbers-10",
+      "cue": "10"
+    },
+    {
+      "id": "dk-u01-my-name",
+      "revision": 1,
+      "type": "sentence",
+      "en": "My name is {{name}}.",
+      "pl": "Mam na imię {{name}}.",
+      "skill": "introductions",
+      "gap": {
+        "q": "My name ___ {{name}}.",
+        "a": "is",
+        "options": [
+          "is",
+          "am",
+          "are"
+        ]
+      }
+    },
+    {
+      "id": "dk-u01-i-am",
+      "revision": 1,
+      "type": "sentence",
+      "en": "I'm {{name}}.",
+      "pl": "Jestem {{name}}.",
+      "skill": "introductions",
+      "gap": {
+        "q": "___ {{name}}.",
+        "a": "I'm",
+        "options": [
+          "I'm",
+          "My",
+          "Name"
+        ]
+      }
+    },
+    {
+      "id": "dk-u01-your-name",
+      "revision": 1,
+      "type": "sentence",
+      "en": "What's your name?",
+      "pl": "Jak masz na imię?",
+      "skill": "introductions",
+      "gap": {
+        "q": "What's ___ name?",
+        "a": "your",
+        "options": [
+          "your",
+          "you",
+          "I"
+        ]
+      }
+    },
+    {
+      "id": "dk-u01-how-are",
+      "revision": 1,
+      "type": "sentence",
+      "en": "How are you?",
+      "pl": "Jak się masz?",
+      "skill": "greetings",
+      "gap": {
+        "q": "How ___ you?",
+        "a": "are",
+        "options": [
+          "are",
+          "am",
+          "is"
+        ]
+      }
+    },
+    {
+      "id": "dk-u01-fine-thanks",
+      "revision": 1,
+      "type": "sentence",
+      "en": "I'm fine, thanks.",
+      "pl": "Mam się dobrze, dzięki.",
+      "skill": "greetings",
+      "gap": {
+        "q": "I'm fine, ___.",
+        "a": "thanks",
+        "options": [
+          "thanks",
+          "name",
+          "ten"
+        ]
+      }
+    },
+    {
+      "id": "dk-u01-age-question",
+      "revision": 1,
+      "type": "sentence",
+      "en": "How old are you?",
+      "pl": "Ile masz lat?",
+      "skill": "age",
+      "gap": {
+        "q": "How ___ are you?",
+        "a": "old",
+        "options": [
+          "old",
+          "name",
+          "fine"
+        ]
+      }
+    },
+    {
+      "id": "dk-u01-age-ten",
+      "revision": 1,
+      "type": "sentence",
+      "en": "I'm ten years old.",
+      "pl": "Mam dziesięć lat.",
+      "skill": "age",
+      "gap": {
+        "q": "I'm ten ___ old.",
+        "a": "years",
+        "options": [
+          "years",
+          "name",
+          "fine"
+        ]
+      }
+    },
+    {
+      "id": "dk-u01-age-nine",
+      "revision": 1,
+      "type": "sentence",
+      "en": "I'm nine.",
+      "pl": "Mam dziewięć lat.",
+      "skill": "age",
+      "gap": {
+        "q": "___ nine.",
+        "a": "I'm",
+        "options": [
+          "I'm",
+          "I have",
+          "My name"
+        ]
+      }
+    }
+  ]
+}
