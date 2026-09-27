@@ -1,4 +1,8 @@
-# Status and priorities
+# Historical v1 status and priorities
+
+**Source recovered during pilot preparation:** the parent supplied [scripts/worker.js](../scripts/worker.js). The binding is `PROGRESS`, progress uses per-device `d:` keys, and backups use five `b:` slots with a 120-day expiry. The current [pilot deployment guide](pilot-deployment.md) extends this service in place; statements below about missing source describe the earlier audit.
+
+**Pilot update:** a new book-aligned implementation is prepared on `pilot/four-week-book-course`. See [pilot implementation](implementation.md), [four-week plan](learning-plan.md) and [deployment gate](pilot-deployment.md). The findings below describe the original v1, not the new branch. Its nine expected-failure checks have been superseded by positive v2 regressions. The deployed v1 has not been changed.
 
 Reviewed on **27 September 2026**, against commit `b70cf40` and the locally supplied preliminary conversation. This review adds documentation and reproducible checks; it does not change the running application.
 
@@ -80,4 +84,4 @@ Steps 1–3 are bounded engineering work; adding an AI service is not a prerequi
 | Live write/read, offline merge, two-device convergence and restore | Not certified: Worker source and isolated test setup absent |
 | GitHub Pages settings and Cloudflare account/binding/billing | Not inspected; local GitHub CLI was not authenticated |
 
-Tests live in [test_current_behavior.py](../tests/test_current_behavior.py) and [audit_scenarios.cjs](../tests/audit_scenarios.cjs). The Node harness executes trusted checked-out JavaScript with mocked DOM, storage and HTTP, date `2026-09-28T12:00:00Z`, and seed 42. It exercises the real builder, grading, save, completion, merge and sync functions. It does not emulate a complete browser or the missing server. The L2 test encodes a recommended learning requirement; it demonstrates the current pacing limitation rather than a promise already enforced by the original code.
+The historical checks were committed at `71441b2`. The current [pytest entry point](../tests/test_current_behavior.py) now runs the modular pilot tests; the old inline-script harness was intentionally retired. The Node harness executes trusted checked-out JavaScript with mocked DOM, storage and HTTP, date `2026-09-28T12:00:00Z`, and seed 42. It exercises the real builder, grading, save, completion, merge and sync functions. It does not emulate a complete browser or the missing server. The L2 test encodes a recommended learning requirement; it demonstrates the current pacing limitation rather than a promise already enforced by the original code.

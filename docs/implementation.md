@@ -1,93 +1,86 @@
-# Implementation reference
+# Pilot implementation
 
-As reviewed on 27 September 2026 at `b70cf40`. All runtime code is in [index.html](../index.html); the live file matched it exactly. The new tests and documentation do not alter runtime behaviour.
+Prepared on branch `pilot/four-week-book-course`; live v1 remains separate until parent approval. This replaces the original inline-script design with a small, build-free set of ES modules and JSON content. No runtime libraries or AI service were added.
 
-## Structure
+## Files and responsibilities
 
-| Part | Location / entry points | Responsibility |
-| --- | --- | --- |
-| Page and styling | HTML head, inline CSS, `#app` | Responsive column, football scoreboard, cards, buttons, reduced-motion support |
-| Teaching content | `CONTENT.weeks` | Two units, words, Polish glosses, grammar explanations, sentences and gap options |
-| Configuration | `CFG` | Five new words, maximum 20 exercises, intervals `[0,1,2,4,8]` days, weekly target five days, 10/2 XP |
-| Local persistence | `canStore`, `load`, `save`, `backup` | JSON in browser localStorage, memory fallback, five rotating snapshots |
-| Remote client | `syncUrl`, `merge`, `pull`, `push`, `trySync` | Worker URL configuration, profile fetch, save and reconciliation |
-| Learning logic | `rec`, `buildSession`, `grade`, `finishSession` | Item records, task selection, answer results, attendance, badges and unit unlock |
-| Speech | `initVoice`, `say` | Browser text-to-speech; prefer `en-GB`, then another English voice; rate 0.85 |
-| Interface | `screenHome`, `renderQ`, `answer`, `screenResult`, `screenParent`, `screenName` | Rebuild screen HTML and bind its controls |
-| Startup | `boot`, `online` event listener | Adopt link key, load/pull profile, render, attempt pending uploads |
-
-There are no imported JavaScript libraries, remote fonts, analytics scripts, AI calls or audio files. Browser/device voices supply audio, with availability depending on the device ([MDN](https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesis/getVoices)). There is no speech recognition or pronunciation assessment.
-
-## Exercise and progression model
-
-1. Unlock words from units whose numeric ID is at most `S.week`.
-2. Select up to five unseen words in content order. Each gets English-to-Polish recognition and later Polish-to-English recall.
-3. Collect seen words whose due date is today or earlier. Choose listening, translation or typing by box; limit typing to five tasks.
-4. Shuffle initial/review exercises; append later recall and four randomly chosen current-unit sentence tasks, normally two gaps and two ordering tasks.
-5. Try to reach 12 exercises using spare sentences or weaker known words. Finally truncate to 20, which currently creates the L1 defect.
-
-Answers are compared after lowercasing, trimming, removing `. ! ? ,` and collapsing whitespace. Apostrophes and alternative phrasings are not normalised. There is no semantic grading.
-
-A correct answer advances the item one box up to four; a mistake resets it to zero. Due date becomes today plus the box interval. The same word can advance twice in its introductory session. The home screen calls box 3+ “known”; unlocking the next unit uses a different threshold: at least 80% of the current unit's words in box 2+. Sentence performance does not influence unlocking.
-
-“Week” is a content-unit ID, not a calendar week. The current increment logic expects contiguous IDs `1, 2, 3, ...`. Attendance counts unique completed dates. A gap of at most three days preserves the streak, permitting a weekend break. Multiple rounds in one day add XP but do not add another attendance day.
-
-## State and browser storage
-
-| Storage key | Value |
+| File | Purpose |
 | --- | --- |
-| `eng-trainer-v1` | Current profile JSON |
-| `eng-trainer-v1-url` | Device/browser override for the Worker base URL |
-| `eng-trainer-v1-bakn` | Rotating backup slot index |
-| `eng-trainer-v1-bak0` … `-bak4` | Five profile snapshots |
+| `index.html` | Existing mobile styling and app mount; loads the application module |
+| `src/app.mjs` | Learner screens, parent controls, browser speech, report/backup downloads |
+| `src/engine.mjs` | Pure validation, event reduction, scheduling and weekly-report logic |
+| `src/persistence.mjs` | IndexedDB event storage, backup validation and v2 sync client |
+| `content/pilot.json` | Content version, source provenance, skill labels, weekly briefs and missions |
+| `content/units/u01.json` … `u03.json` | First three book units: 56 vocabulary items and 24 sentences |
+| `content/roadmap.json` | 26 provisional book milestones, mostly not yet authored |
+| `config.json` | Release status and optional pilot Worker URL; currently blank |
+| `worker/index.mjs` | Extended eng-sync Worker: new event API plus existing routes |
+| `scripts/worker.js` | Parent-supplied legacy Worker source, preserved unchanged |
+| `scripts/course.mjs` | Dependency-free validation and report review helper |
 
-Profile fields:
+## Data model
 
-| Fields | Meaning |
+Every practice observation is an immutable event with a unique ID, timestamp, local date, course/version and app version. Event types are `intro`, `attempt`, `session`, `plan`, `review` and `profile`.
+
+Attempts reference permanent item IDs and revisions, exercise type, correctness, assistance, session ID and response duration. Raw typed answers are not stored. A session completion records elapsed time; a partial round can still be inferred from its attempts after a tab is closed. Parent notes and pacing decisions also remain in the event history.
+
+The local database is `english-trainer-pilot`, IndexedDB version 1. Its `events` object store uses a combined profile/event key, indexed by profile. Rows include the event and a pending-upload marker. Each answer is committed before allowing the learner to advance. A quota/write failure is surfaced rather than silently presenting the answer as saved.
+
+The learner key is in `#k=...` and small localStorage metadata (`pilot-profile-key`). The optional endpoint override uses `pilot-sync-url`. Different profile keys have separate event histories. The original `eng-trainer-v1` localStorage record is left intact and is downloadable from the parent panel if present. Legacy aggregate scores are not converted into invented detailed attempts or silently applied to the new book syllabus.
+
+Derived state is recomputed from the event union: item attempts, boxes/due dates, separate sessions and completed practice dates, XP, parent notes and the latest plan. This provides a small inspectable record rather than competing mutable aggregate snapshots. The app never deletes or resets an existing history through its UI.
+
+## Scheduling and teaching
+
+- Parent selects the week, round cap (12/16/20), daily new-word cap (0–5) and optional focus. Weeks do not auto-unlock from scores.
+- Introductions show English, Polish meaning and optional cue before testing. Introductions are ungraded.
+- Four grammar slots are reserved before vocabulary allocation. A new sentence costs an introduction plus an exercise; known sentences cost one exercise. Due sentences from earlier units remain eligible.
+- A new word receives introduction, recognition and later retrieval; all three are budgeted together so truncation cannot discard the latter.
+- Due vocabulary is prioritised by focus and due date. More than twelve due vocabulary items pauses new words for that round.
+- At most four spelling tasks are generated; listening has a visual fallback if speech synthesis is missing or silent.
+- Only an unaided correct answer on a later date, when due, promotes an item, at most once per date. A mistake resets its box and schedules another day. Intervals are `[1,1,3,7,14]` days.
+- A revealing audio hint on spelling or sentence tasks is recorded as assistance. Listening to the target in a listening exercise is part of the task, not a hint.
+- Consolidation week does not introduce new words. Unseen backlog is unfinished teaching: repeat an earlier week if necessary.
+
+The weekly report includes a dated list of recent attempts with exercise type and assistance, cumulative item history and recent parent observations. It uses explicit conservative heuristics; it is not a pronunciation or proficiency assessment. See [weekly adaptation](weekly-review.md).
+
+## Sync contract
+
+The parent supplied the original Worker in `scripts/worker.js`. The extended Worker delegates legacy routes to that unchanged module and adds the v2 API. Both use the existing `PROGRESS` KV binding. Legacy data uses `d:<profile>:<device>` and `b:<profile>:<slot>`; pilot events use `v2:<profile>:<event-id>`. Neither API's writes overlap the other's keys. The pilot frontend never invokes legacy reset or restore routes.
+
+| Request | Response |
 | --- | --- |
-| `name` | Cosmetic display name |
-| `key` | Shared learner identifier used in the app fragment and Worker path |
-| `dev` | Per-device shard identifier intended for the server's merge design |
-| `rev`, `dirty` | Revision and pending-upload flag; current handling has known defects |
-| `started`, `week` | Start date and content-unit ID |
-| `xp`, `streak`, `best`, `last`, `dates`, `badges` | Aggregate rewards and attendance |
-| `items[id]` | `{box, due, ok, bad, seen}` for a word or sentence |
+| `GET /health` | v2 service identity and whether the KV binding exists |
+| `POST /v2/p/<key>` with `{events:[...]}` | `{schemaVersion:2, accepted:[event IDs]}` after storage writes succeed |
+| `GET /v2/p/<key>?cursor=...` | `{schemaVersion:2, events:[...], cursor:"..."}`; empty cursor ends pagination |
+| `OPTIONS` | CORS support for GET, PUT and POST with Content-Type |
 
-`due` is an integer count of days since the Unix epoch. `today()` uses the device's local date; `dayNum()` converts that date to a UTC midnight day index. Dates such as `started` and entries in `dates` are `YYYY-MM-DD` strings.
+KV keys use `v2:<profile>:<event-id>`. POST batches contain at most 40 events; a bulk existence read plus 40 writes stays below the documented 50 subrequest free-plan limit. GET lists up to 100 keys and uses a bulk read. [KV read API](https://developers.cloudflare.com/kv/api/read-key-value-pairs/), [Worker limits](https://developers.cloudflare.com/workers/platform/limits/).
 
-There is no stored session list, individual answer log, elapsed time, hint count, content version or schema version field. `Q` holds the active round only in memory. Reloading loses the position in that round, although already graded answers are locally saved.
+The client uploads pending IDs before pulling pages. Only a complete, validated acknowledgement clears the sent IDs. New answers created while a request is in flight remain pending. Retries carry the same IDs; unions prevent duplicated XP. A conflicting payload with the same ID is rejected. Neither a stale response nor an old cloud page replaces newer local records.
 
-If localStorage is unavailable on initial probing, the app uses memory for the current page. Later write failures are swallowed. Adding to the home screen does not establish a general guarantee that storage or offline speech will work.
+Requests time out after 12 seconds. Offline errors retain pending records; retry occurs on app opening, completing/quitting a session, reconnect, focus, or a manual connection action. Browser tabs merge through per-event IndexedDB rows and refresh through BroadcastChannel; background refresh leaves active questions and parent form edits alone.
 
-## Identity, sync and server contract
+KV is eventually consistent; cross-device visibility may lag. This design avoids overwriting separate events but does not claim instantaneous cross-region reads. The cloud protocol is covered by local fake-KV tests and still needs deployed acceptance testing.
 
-The complete app link has the form `https://tjetka.github.io/private_english_tutor/#k=<learner-key>`. The key represents the learner across devices; the name does not. A new device also needs the Worker address because the default is currently empty. The share link carries the learner key, but not the Worker address. The saved URL override wins over any future nonempty default.
+## Editing content
 
-The local app is not simply an independent authority with a passive cloud backup: a successful PUT can replace local state with the server response. Correct reconciliation is therefore essential.
+JSON is the source of truth, not generated HTML. Add a unit file, list it in `unitFiles`, add readable labels for new skill tags and append a contiguous weekly plan. The engine accepts additional weeks (up to 52) without a new UI route.
 
-| Operation | Client request | Expected response / usage |
-| --- | --- | --- |
-| Read | `GET /p/<key>` | Profile JSON; 404 means no saved profile |
-| Save | `PUT /p/<key>` with JSON profile | HTTP success; client recognises `{ "state": <merged profile> }` and adopts it |
-| Replace | `PUT /p/<key>?mode=replace` | Used for import/reset; deployed semantics need source inspection |
-| Parent report | `GET /p/<key>/report` | Readable text, as described by conversation and live root route listing |
-| Preflight | `OPTIONS` | Needed for cross-origin JSON PUT from GitHub Pages |
+A wording correction keeps the item's ID and increments revision. A different target meaning gets a new ID. Update the course version/provenance, validate, inspect the parent preview and obtain review before publication. Old events retain their original item revision/content version.
 
-The live Worker also advertises `GET /b/<key>`, `GET /b/<key>/<slot>` and `PUT /b/<key>/<slot>` for listing, reading and restoring backups. These are not called by the current HTML. Their schemas, slot rules and retention are unknown until the Worker is recovered.
+The source PDF is ignored by Git and absent from the frontend. Only source metadata and original adapted practice are versioned. See `content/AGENTS.md` for editing rules.
 
-The conversation describes KV entries named `d:<learner-key>:<device-id>` and server-side merging across device shards. This is historical design evidence, not recovered server code. Do not assume that either sharding or a higher `rev` automatically solves the client defects in the [status report](status.md).
+## Verification and limits
 
-Startup pulls; session completion starts a fire-and-forget push. Saving the Worker address pulls then pushes. Import/reset push with replace mode. The browser's `online` event pushes only if dirty. There is no periodic polling, focus refresh, request timeout or durable retry queue.
+Run `node scripts/course.mjs validate` and `python3 -m pytest -q`. Pytest runs three standard Node test suites for engine, sync client and Worker; the original inline-script extraction harness was intentionally replaced after modularisation. The previous audit's expected failures are now ordinary positive regression checks.
 
-## Editing and extending content
+Validation on 27 September 2026:
 
-Each unit needs `id`, `title`, `sub`, `grammar: {t,b}`, `words` and `sentences`. Words need a permanent `id`, `en` and `pl`. Sentences need a permanent `id`, complete English and Polish text, and `gap: {q,a,o}`. Supply at least four usable sentences per unit for the current builder.
+- Full pytest suite: three passing suite wrappers, running 38 deterministic Node tests (18 engine, 10 sync, 10 Worker). Ruff and content validation pass.
+- Chrome at a 390 × 844 viewport: introductions, grading, a complete synthetic round and reload persistence checked. Week/pace/focus controls retain their values after reload; parent notes save and appear in the panel.
+- Downloaded a synthetic weekly report and backup. The report helper reads the exported file; the backup validator reconstructs the expected 52 XP, completed day, plan and observation. Browser console showed no errors.
+- Worker bundles successfully in Wrangler **4.142.0** dry-run mode, using a temporary TOML config with a dummy namespace. No cloud deployment or cloud data write was performed.
+- Backup import through the browser file chooser could not be completed because the automation extension disallowed local file access. Backup schema/conflict handling is covered in the automated tests; the complete browser restore flow still needs acceptance testing.
 
-- Keep IDs globally unique across words and sentences. Never reuse an ID for a different learning item: historical progress stays attached to it.
-- Keep unit IDs ordered and contiguous while the current unlocking code remains in use.
-- Make each correct option occur exactly once. Keep distractor translations distinct and pedagogically plausible.
-- Review spelling, grammar, Polish meaning, speech playback and prerequisites. Model generated text needs the same review as manually written content.
-- To correct meaning substantially, consider a new ID. Deleting old content removes it from the teaching pool but does not erase its historical item record.
-- Update the content-count baseline test when intentional content expansion changes the current 2/34/11 inventory. Add checks for new behaviour as it is implemented.
-
-For the next implementation phase, separate content, pure learning logic, browser storage and sync into small modules when that makes the fixes easier. Preserve a build-free static deployment if possible. Add a versioned content/schema format and capture app version, content version and lesson preparation provenance with future session records; these are proposed improvements, not existing fields.
+Android device voices, deployed cloud behaviour, real-child usability and recovery across real devices require acceptance testing. There is no service worker, so an already-loaded page can keep saving without internet, but offline cold start is not guaranteed.

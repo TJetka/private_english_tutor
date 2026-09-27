@@ -1,61 +1,60 @@
-# English Trainer
+# English Trainer: book-based pilot
 
-A small Polish-language web app for a beginner learning English, with a football-themed interface, short exercises, speech playback and progress tracking.
+A small mobile web app for a Polish-speaking beginner, using soccer, Minecraft and maths as familiar contexts. A parent leads one weekly lesson and reviews adjustments; short daily practice adapts through spaced review.
 
-**Current assessment (27 September 2026): useful practice prototype; not yet a complete personalised course.** The app contains two content units, 34 words and 11 sentences. Its simple architecture fits family use. Learning progression and cloud synchronisation need corrections before relying on them unattended.
-
-- **Open the app:** <https://tjetka.github.io/private_english_tutor/>
-- **Sync service:** <https://eng-sync.t-jetka.workers.dev>
-- **Repository:** <https://github.com/TJetka/private_english_tutor>
+**Current branch:** `pilot/four-week-book-course`, ready for parent review. The existing [live v1](https://tjetka.github.io/private_english_tutor/) has not been replaced. Publication is a separate step, as requested by the parent.
 
 ## Start here
 
-| Document | What it answers |
-| --- | --- |
-| [Status and priorities](docs/status.md) | Does the implementation meet the original aims? What matters most before regular use? |
-| [Implementation](docs/implementation.md) | How are content, exercises, progress, audio and sync implemented? |
-| [Deployment and recovery](docs/deployment.md) | Which services and settings are needed? How do I update, reconnect or recover the app? |
-| [First week and ongoing use](docs/learning-plan.md) | How can we start on 28 September, and build a sustainable personalised learning routine? |
+- [Four-week pilot](docs/learning-plan.md): first three lessons from the supplied DK book, then consolidation.
+- [Weekly adaptation](docs/weekly-review.md): how a parent and AI agent maintain the course with small changes.
+- [Longer roadmap](docs/roadmap.md): 26 book milestones, roughly 27 weeks including the extra pilot review.
+- [Implementation](docs/implementation.md): content, scheduling, growing practice history and sync.
+- [Pilot deployment](docs/pilot-deployment.md): exact setup, acceptance checks and transition from v1.
+- [Historical audit](docs/status.md) and [legacy deployment](docs/deployment.md): original findings and service information.
 
-The review also used the locally supplied `docs/preliminary_conversation.md`, left unchanged and untracked. Treat that conversation as design background; the documents above distinguish aspirations from implemented behaviour.
+## What is prepared
 
-## What runs where
+The app contains 56 vocabulary items and 24 sentence patterns mapped to **My friends**, **At school**, and **Our classroom** (book pp. 10–27). Each pilot week has a parent brief, five daily prompts, a themed mission and oral checks. Material is shown before testing. Previous material returns, grammar keeps its own slots, and same-day repetitions do not increase retention levels repeatedly.
+
+The parent panel controls week, pace and focus, records observations, and exports both a key-free review report and a full recovery backup. Progress is an append-only history in browser IndexedDB. Optional cloud history uses an update to the existing eng-sync Worker and its PROGRESS KV binding; it is not yet deployed. The original routes remain available and pilot events use separate keys.
+
+## Why this is maintainable
+
+Teaching content is ordinary versioned JSON in `content/`. An agent can read a weekly report, propose a small change, validate it and show it for parent review. The app handles daily repetition. There is no runtime AI dependency, SQL administration, CMS, build pipeline or generated 26-week exercise backlog.
 
 ```mermaid
 flowchart LR
-    Repo[GitHub repository] --> Pages[GitHub Pages: index.html]
-    Pages --> Browser[Child or parent browser]
-    Browser <--> Local[Browser localStorage: progress]
-    Browser --> Voice[Device speech synthesis: audio]
-    Browser <-->|Configured Worker URL + learner key| Worker[Cloudflare Worker: sync and report API]
-    Worker <--> KV[Cloudflare Workers KV: described storage]
+    Book[Book objectives and illustrations] --> Content[Reviewed JSON content in Git]
+    Content --> App[Static app on GitHub Pages]
+    App --> History[Practice events in IndexedDB]
+    History <--> Cloud[Optional pilot Worker and KV]
+    History --> Report[Weekly report and parent observations]
+    Report --> Review[AI editor proposes small adjustments]
+    Review --> Parent[Parent review]
+    Parent --> Content
 ```
 
-The Worker is live, but its source and KV binding configuration are missing from this repository. KV and per-device shards are described in the background conversation; the deployed storage implementation has not been independently inspected.
+## Local use and checks
 
-There is no runtime AI integration, paid speech API, application framework, package build, login service or separate database server in the checked-in app. Content is written directly in `index.html`.
-
-## Local preview and verification
-
-Run from the repository root:
+From the repository root:
 
 ```sh
+node scripts/course.mjs validate
+python3 -m pytest -q
 python3 -m http.server 8000 --bind 127.0.0.1
 ```
 
-Open `http://127.0.0.1:8000/`. Use a synthetic learner for testing. Browser storage belongs to this local origin, separately from the live site. Sync is disabled initially because `SYNC_URL_DEFAULT` is empty.
+Open `http://127.0.0.1:8000/` and use a synthetic profile for testing. `config.json` defaults to local-only progress until a v2 Worker is deployed. Review all four weeks through **Panel rodzica**.
 
-The audit needs Node.js and pytest, but the app itself needs neither:
+If pytest is absent, `uv run --with pytest python -m pytest -q` creates a temporary tool environment. JavaScript tests use Node 22+ and its built-in test runner: `node --test tests/*.test.mjs`. They make no external network calls.
 
-```sh
-python3 -m pytest -q tests/test_current_behavior.py
-python3 -m pytest -q
-```
-
-If pytest is not installed, an optional temporary environment is:
+For a weekly report:
 
 ```sh
-uv run --with pytest python -m pytest -q
+node scripts/course.mjs review local/english-review-YYYY-MM-DD.json
 ```
 
-Baseline: **4 passed, 9 expected failures**. Expected failures reproduce unresolved defects; this is not a clean bill of health. They are strict, so fixes require promoting the corresponding checks to ordinary passing tests. Scenarios use only synthetic data, mocked HTTP/storage, a fixed date and RNG seed 42. Run `node tests/audit_scenarios.cjs` to see observations without pytest. See [verification limits](docs/status.md#verification).
+Keep learner exports under ignored `local/` or outside the checkout. The supplied PDF remains under ignored `book/`; its pages and recordings are not part of the deployed app. Source hash, edition and preparation provenance are recorded with the content.
+
+Actual Android audio and cloud write/read/restore still need live acceptance checks. There is no guaranteed offline cold start. See [publishing the pilot](docs/pilot-deployment.md) before using it as the primary practice tool.

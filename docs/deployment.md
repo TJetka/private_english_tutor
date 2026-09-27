@@ -1,4 +1,8 @@
-# Deployment, operation and recovery
+# Legacy v1 deployment, operation and recovery
+
+**Source recovered during pilot preparation:** the parent supplied [scripts/worker.js](../scripts/worker.js). The binding is `PROGRESS`, progress uses per-device `d:` keys, and backups use five `b:` slots with a 120-day expiry. The current [pilot deployment guide](pilot-deployment.md) extends this service in place; statements below about missing source describe the earlier audit.
+
+**For the new pilot, use [pilot-deployment.md](pilot-deployment.md).** This document preserves the operational reference for the still-live v1 and its original Worker.
 
 Verified where stated on **27 September 2026**. The existing services are already running; recover and document their configuration before recreating anything.
 

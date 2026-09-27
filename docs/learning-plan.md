@@ -1,59 +1,52 @@
-# First week and ongoing use
+# Four-week pilot
 
-Suggested pilot: **28 September–4 October 2026**. This is a parent-led plan for the current prototype, not a claim that the app already delivers a complete course.
+Ready for parent review; not published. Intended start: 28 September 2026, adjustable. Rhythm confirmed by the parent: one joint lesson of about 30 minutes and five short practices each week. Device: Android smartphone. Themes: soccer, Minecraft and maths.
 
-## Before the first practice
+Source: the supplied **English for Everyone Junior: Beginner’s Course, First American Edition (2020)**, ISBN 978-1-4654-9230-2. Book units 1–3 and printed/PDF pages 10–27 were inspected, including the illustrated material that is missing from plain text extraction. The app contains original practice and Polish explanations aligned to those objectives; book pages, artwork, songs and recordings are not shipped with it.
 
-- Pick one primary device and browser. Confirm the learner link and Worker URL, save an external progress copy, and listen to several words/sentences on that device. Follow [deployment and recovery](deployment.md).
-- Confirm the child's current starting point and two or three actual interests. Football is the current interface theme, not evidence of his preference. Check which name should appear in lesson sentences.
-- Choose the role of a course book or existing tutoring material: either map these exercises to it, or commit to a reviewed standalone syllabus. The app currently has neither a DK unit mapping nor a complete independent course.
-- Treat unit unlocking and the “umie” label as rough practice signals until delayed-recall checks are implemented. Avoid using repeated rounds to rush through both units.
+| Pilot week | Book | Prepared learning | Personalised application |
+| --- | --- | --- | --- |
+| 1: Poznajemy drużynę | Unit 1, My friends, pp. 10–15 | Greetings, name, feelings, age, numbers 1–10; 15 vocabulary items and eight sentence patterns | Introduce a new soccer player, make a player card and say simple maths results |
+| 2: Szkoła naszej drużyny | Unit 2, At school, pp. 16–21 | School vocabulary, twelve instructions, his/her name; 24 vocabulary items and eight sentence patterns | Build or draw a Minecraft-style classroom and introduce two fictional teammates |
+| 3: Budujemy i liczymy | Unit 3, Our classroom, pp. 22–27 | Activities, Let’s, numbers 11–20 and regular plurals with familiar nouns; 17 vocabulary items and eight sentence patterns | Count blocks, invite a game, draw and count a team |
+| 4: Consolidation | Revisit units 1–3 | Delayed review and parent-led oral check; no new words by default | Present a mini school/team scene and choose what to repeat next |
 
-## A workable first week
+The whole bank is available for these units; completing all 80 items is not a four-week pass/fail condition. Unit 2 has more vocabulary than can comfortably fit some children's weeks. The parent may repeat it and shift later dates. Any unintroduced material remains visible in the report and can be taught during an extended unit.
 
-| When | Parent/child activity | What to observe |
-| --- | --- | --- |
-| Monday, 25–35 minutes together | Introduce the first words with objects, gestures and audio; practise name/age exchanges; complete one app round together | Can he follow the Polish instructions? Does he understand before guessing? Does audio work? |
-| Tuesday–Friday, one short daily practice | Aim for one round within roughly 10–15 minutes, adjusting to actual attention and difficulty; finish by saying two or three familiar sentences aloud | Duration, help needed, repeated confusions and whether he wants to return |
-| Saturday or Sunday, 15–20 minutes together | Show objects or give simple prompts without answer choices; revisit difficult words and familiar sentence patterns; look at the parent's word table | Recall after a delay, rather than same-session score; choose what to reteach |
-| Optional weekend catch-up | Make up a missed practice day if useful | Five practice days is the app's target; consecutive calendar days are not required |
+## First session: establish the starting point
 
-The app cannot currently enforce a 15-minute session, hold the child at a chosen unit, or generate this weekly lesson. If it advances early, the parent can continue reviewing unit 1 outside the app; do not reset progress to control pace.
+Before using a score as a baseline, ask the child to greet you, give his name, respond to a question about age, and recognise a few numbers. If he already knows these comfortably, reduce repetitive work and use the first week to check recall after a delay. If they are new, follow the learn cards and the book's audio together.
 
-Keep online conversation tutoring as the place to use the week's language. Give the tutor the target vocabulary, sentence patterns and persistent difficulties. Translation/multiple-choice scores alone are not a speaking assessment.
+The app asks for a name or nickname. No real name or age has been assumed from the original prototype. Example ages such as ten are practice examples; the child should use his actual age in the parent conversation.
 
-## What to prepare for each new unit
+On the Android phone, check the English voice, volume and manual replay. Confirm that an answer survives reloading and download a synthetic test backup/report before beginning real practice. Browser viewport testing on a desktop does not certify Android audio or home-screen behaviour.
 
-Use one short parent brief as the central artifact:
+## Weekly joint lesson
 
-1. **Outcome:** two or three things the child should be able to understand or say independently.
-2. **Prerequisites:** previously introduced words and structures used in the new material.
-3. **New content:** a manageable set of words and one main structure, reviewed for English/Polish accuracy and a clear audio model.
-4. **Teaching:** a short dialogue or continuing story, concrete objects/pictures where useful, and prompts for the parent.
-5. **Practice:** daily new/review balance, grammar recycling, speaking prompts and answers. Reserve revision days rather than adding new words every round indefinitely.
-6. **Check:** a few unaided prompts after a delay, including listening/meaning and producing a short phrase; adapt the next unit from the result.
+Use roughly 5 minutes to retrieve earlier language, 10 with the book's illustrations/audio, 10 for a short dialogue or physical activity and one app round, and 5 for a parent observation. Adjust rather than hurry if something takes longer.
 
-AI can help draft this pack outside the app. A parent reviews it, then updates the versioned content. Automatic generation inside the child's session is not needed to start. Record the content version, source/reference, preparation date and review decisions so future lessons remain coherent.
+The app's parent panel contains the week-specific brief, five daily prompts, all prepared material and oral checks. New words and sentences appear on a learn card with their meaning before they are tested. Sentences are taught as useful chunks even when every component word has not yet been studied individually.
 
-Prepare four usable units and an outline of the wider course before making this the sole general-English source. The original 36–40-week idea is a planning horizon; it is not material already present in the repository.
+## Daily practice
 
-## Weekly adaptation with today's limited records
+One short round is the starting point, normally within about 10–15 minutes including saying phrases aloud. Rounds have 12–20 as a configurable maximum/target, with fewer possible when little material is available. The display does not promise a measured 15 minutes.
 
-The parent panel can show word status and aggregate right/total counts. A working Worker report may make the same history easier to share, but its exact fields still need inspection. Neither should be assumed to include timings or individual sessions because the client does not store them.
+The default daily cap is four new words. A shorter round or an overdue backlog can introduce fewer; sentence introductions are separate. There is room for grammar and later recall of introduced words. Repeat rounds are allowed, but do not unlock a new week or repeatedly increase an item's retention level in a single day.
 
-For the pilot, keep a tiny parent note outside the app:
+End by saying one or two familiar phrases without choices. This is parent/child practice; the app does not automatically score speech.
 
-```text
-Unit/content version:
-Practice dates and approximate minutes:
-Words or sentence patterns needing help:
-What he recalled without choices after a delay:
-What he enjoyed or avoided:
-Next lesson: repeat / extend / introduce:
-```
+## Week 4 review
 
-Use that note plus the curriculum and current progress to prepare the following week. Avoid concluding that a word is mastered because he recognised it twice immediately after hearing it. Success for the first week means a repeatable routine, understandable tasks, usable audio, retained language and progress that can be recovered—not a particular XP total.
+Use small, unaided prompts rather than an intimidating exam:
 
-## Product priorities after the pilot
+- Introduce yourself, ask a name, exchange a greeting and answer an age question.
+- Follow five familiar instructions with a real book or a drawing.
+- Introduce two fictional people using his/her name.
+- Recognise sampled numbers from 1–20 and produce a few numbers aloud.
+- Invite two activities using Let’s, then distinguish one and several familiar objects.
 
-First implement reliable progress and correct scheduling. Then add learn-before-quiz introductions, parent control of pacing, delayed recall checks, current/previous-unit grammar practice and a compact record of sessions and assistance. Add reviewed visual vocabulary and a continuing story based on the child's interests. Use observed difficulties to decide whether further audio tooling, speech assessment or AI integration is worth the complexity.
+Record where help was needed and whether the child wants to continue. The final review can identify what to repeat; it is not a standardised CEFR assessment.
+
+## Decision at the end
+
+Continue if the routine is manageable, audio works on the actual phone, progress is recoverable, and some language can be recalled later without choices. If motivation or recall is poor, change one or two things and repeat a topic. Use [the weekly review workflow](weekly-review.md) and [the broader roadmap](roadmap.md) for the next decision.
