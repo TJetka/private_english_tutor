@@ -17,7 +17,7 @@ Maintain **a course outline, a small bank of reviewed content, and an accumulati
 
 The browser already contains a small database (IndexedDB). Cloudflare KV is the optional cloud database. A new SQL service, vector database or content CMS would add administration without solving a current pilot need. Reconsider SQL if there are many learners, large cross-learner queries, or a real requirement for immediate server-side transactions.
 
-The existing eng-sync Worker is extended with a v2 API, using the same PROGRESS namespace and a new key prefix. No second cloud service is needed. The pilot uses one immutable key per event. It avoids the old design's competing writes to a single aggregate. KV reads remain eventually consistent, so another device can temporarily lag; a local union retains every event already seen. This is suitable for occasional family use, but requires a real deployment acceptance test before relying on cloud continuity. [Cloudflare consistency documentation](https://developers.cloudflare.com/kv/concepts/how-kv-works/).
+The existing eng-sync Worker is extended with a v2 API, using the same PROGRESS namespace and a new key prefix. No second cloud service is needed. The pilot uses one immutable key per event. It avoids the old design's competing writes to a single aggregate. KV reads remain eventually consistent, so another device can temporarily lag; a local union retains every event already seen. Live API/client acceptance passed on 28 September 2026. Check the actual phone and a backup restore in the first joint session; continue weekly external backups. [Cloudflare consistency documentation](https://developers.cloudflare.com/kv/concepts/how-kv-works/).
 
 ## Critique of preparing 26 complete weeks now
 

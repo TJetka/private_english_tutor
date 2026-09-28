@@ -1,8 +1,8 @@
-# Publishing the reviewed pilot
+# Pilot deployment and operations
 
-The parent approved the prepared pilot and publication on **28 September 2026**. It is on `pilot/four-week-book-course`; the existing live v1 app and `eng-sync` Worker remain unchanged until the cloud update is verified. No further content approval is needed for this reviewed release.
+The parent approved the pilot and publication on **28 September 2026**, then manually deployed the prepared Worker through the private Opera dashboard. The deployed v2 API and live client acceptance checks passed. The frontend release is app `2.0.0-pilot.1`, course `2026.09-pilot.1`, published from `main` at [English Trainer](https://tjetka.github.io/private_english_tutor/). No further content approval is needed for this reviewed release.
 
-Release preparation on 28 September: GitHub Pages settings were verified in the dashboard as **Deploy from a branch → main → /(root)**. SSH repository access works. Opera is signed into the private Cloudflare account containing `eng-sync`; the normal Chrome profile is the user's work account and must not be used for private project authentication. The separate Wrangler sign-in attempt timed out waiting for its authorization callback; command-line authentication is **not verified**. No publishing settings or workflows were changed, and no new Worker code has been deployed.
+GitHub Pages settings were verified as **Deploy from a branch → main → /(root)**. SSH repository access works. Use the private Cloudflare account through Opera; the normal Chrome profile is the user's work account. The separate Wrangler sign-in attempt timed out waiting for its authorization callback; command-line authentication is **not verified**. Manual dashboard deployment succeeded without it. No publishing settings or workflows were changed.
 
 Verified in the private Cloudflare dashboard:
 
@@ -15,7 +15,22 @@ Verified in the private Cloudflare dashboard:
 | KV namespace ID | `5785a6ebe60e4bef883e51d0708484a2` |
 | Active version before the pilot update | `ec55b282` (dashboard's abbreviated ID) |
 
-The namespace ID is configuration, not a credential. On 28 September the parent saved the deployed `worker.js` as ignored `local/cloudflare-before-pilot.js`. It exactly matches `scripts/worker.js` (SHA-256 `c49192abed21e7da36579f3e1d508f12acc62da7f1765f13e59d8b9afd4ce255`), so there are no dashboard-only source changes to preserve. The table is a deployment checkpoint, not evidence that the pilot has been published.
+The namespace ID is configuration, not a credential. Before the update, the parent saved the deployed `worker.js` as ignored `local/cloudflare-before-pilot.js`. It exactly matched `scripts/worker.js` (SHA-256 `c49192abed21e7da36579f3e1d508f12acc62da7f1765f13e59d8b9afd4ce255`), so there were no dashboard-only changes to preserve. Keep the prior version above as the rollback target. The new Cloudflare version ID has not been captured; the manually supplied bundle has SHA-256 `e233b0e8d3ca413d53345e97888cd56df0aed695ce042100b17fd3c114b978be`.
+
+## Verified release checks
+
+On 28 September, `GET /health` returned `schemaVersion: 2` and `storageConfigured: true`. Real HTTPS requests with fresh synthetic profiles verified:
+
+- Writes and complete acknowledgements; CORS preflight supports the frontend's POST requests.
+- Two independent client histories converge; retries do not duplicate events or XP.
+- A simulated offline failure preserves the queue through a serialized client restart and later upload.
+- Conflicting IDs and malformed events are rejected; another profile's history remains empty.
+- A JSON backup validates and merges into a fresh client, then synchronizes without duplicate progress.
+- Legacy progress, report and five-slot backup-list routes still work; pilot writes leave synthetic legacy data unchanged.
+
+The live test used the production sync client with in-memory client stores. It was not a physical Android/browser restore test. No existing learner data was read, reset or overwritten. Test artifacts and synthetic profile keys stay in ignored `local/`. The full local suite also passed: 38 Node regressions through three pytest wrappers, plus all ten Worker tests against the standalone deployment bundle.
+
+**First-session checks still required:** English audio on the actual Android phone; reload and reconnect on that phone; export/import of a synthetic backup in a second browser; and whether the first lesson is comfortable for the child. The earlier desktop test covered a complete round, IndexedDB reload persistence, parent controls and report/backup downloads. Browser file import was blocked by the test browser extension's file-access setting, which was not changed.
 
 ## What has changed operationally
 
@@ -39,7 +54,7 @@ Open `http://127.0.0.1:8000/`, create a synthetic learner and inspect **Panel ro
 
 Review the three book mappings, four weekly plans, pacing controls and [weekly adaptation workflow](weekly-review.md). The exact name is entered in the app. The initial English level and Android voice are checked in the first joint session, not assumed by the code.
 
-## One-time cloud update after review
+## Future Worker updates
 
 Use the existing private Cloudflare account through **Opera**, or Chrome **Guest** if necessary. Keep command-line credentials separate with the named profile `private-english-tutor`; always pass it explicitly. Wrangler's named-profile commands are experimental, so these instructions pin the tested version **4.142.0**. Wrangler is a deployment tool, not an app runtime dependency. The example must be copied to a file ending in `.toml` before Wrangler reads it.
 
@@ -53,7 +68,7 @@ Open the printed authorization URL in Opera, confirm the private account, and au
 
 In Cloudflare **Workers & Pages → eng-sync → Settings → Bindings**, identify the namespace already bound as **PROGRESS**. Put that existing namespace ID into the local `wrangler.toml`. Keep the Worker name `eng-sync` and binding name `PROGRESS`. Do not create an empty replacement namespace. The namespace ID is an identifier; API credentials do not belong in this file or repository.
 
-Before deployment, compare the dashboard's deployed source/bindings with the supplied `scripts/worker.js`, and record the current deployment version for rollback. The local supplied source is not proof that the dashboard has no later edits. If the deployed code differs, recover those changes before replacing it.
+Before a future deployment, export the dashboard's current source and record its version/bindings for rollback. Compare it with the previous release bundle, not the now-legacy `scripts/worker.js`. Recover any dashboard-only changes before replacing it. The first deployment's legacy comparison is recorded above.
 
 Check packaging, then deploy the additive update:
 
@@ -66,19 +81,19 @@ Wrangler bundles the original Worker module and shared validator. Confirm the Wo
 
 ### Dashboard fallback if CLI sign-in fails
 
-An already authenticated private Opera session can publish through **eng-sync → Edit code** without granting Wrangler access. First export the existing `worker.js`, compare it with `scripts/worker.js`, and record the prior version as above. Build a single bundled module locally:
+An already authenticated private Opera session can publish through **eng-sync → Edit code** without granting Wrangler access. First export the current `worker.js`, compare it with the previous release bundle, and record the prior version. Build a single bundled module locally:
 
 ```sh
 npx wrangler@4.142.0 deploy --dry-run --minify --outdir ../local/worker-bundle --config wrangler.toml
 ```
 
-The dry run does not publish or need an authenticated profile. Replace the editor's `worker.js` with the generated `local/worker-bundle/index.js`, review the draft, then deploy it to the existing Worker. Do not paste only `worker/index.mjs`: its imports need bundling. Keep the existing binding and namespace. The same health, persistence and legacy-route acceptance checks below apply. A minified dry run passed on 28 September; the dashboard replacement has not yet been performed.
+The dry run does not publish or need an authenticated profile. Replace the editor's `worker.js` with the generated `local/worker-bundle/index.js`, review the draft, then deploy it to the existing Worker. Do not paste only `worker/index.mjs`: its imports need bundling. Keep the existing binding and namespace. The same health, persistence and legacy-route acceptance checks below apply.
 
-For the current manual handoff, the readable standalone bundle is saved as ignored `local/cloudflare-manual/worker.js`. All ten Worker regression tests also passed against that exact bundle, including legacy routes and preservation of legacy records. Copy the entire file into the dashboard's existing `worker.js`, then deploy. No dependency installation, additional file upload or binding change is needed in the dashboard. Publication remains pending until the parent deploys and the live checks pass.
+For the 28 September release, the parent deployed the readable standalone bundle saved as ignored `local/cloudflare-manual/worker.js`. All ten Worker regression tests passed against that exact bundle, including legacy routes and preservation of legacy records. No dependency installation, additional file upload or binding change was needed in the dashboard.
 
 If the browser switches to an unrelated personal page, return to the project tab before continuing. Do not inspect other private tabs to recover deployment state.
 
-After the update and acceptance checks, set that URL in `config.json`'s `syncUrl`, so new devices need no manual server entry. Existing browser overrides still take precedence; a deliberately empty override disables sync on that browser. The currently deployed old code does not serve the v2 API yet, so the checked-in config remains blank until the upgrade is verified.
+`config.json` now sets `syncUrl` to `https://eng-sync.t-jetka.workers.dev`, so new devices need no manual server entry. Existing browser overrides still take precedence; a deliberately empty override disables sync on that browser. If a previously tested browser remains local-only, enter the Worker address in **Panel rodzica** and choose **Zapisz adres i synchronizuj**.
 
 If account access or deployment is unavailable, a one-device pilot can run with `syncUrl` blank and external JSON backups. Make that limitation explicit; don't present local saves as cloud saves.
 

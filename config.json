@@ -1,5 +1,5 @@
 {
   "appVersion": "2.0.0-pilot.1",
-  "syncUrl": "",
-  "releaseStatus": "approved-awaiting-cloud-checks"
+  "syncUrl": "https://eng-sync.t-jetka.workers.dev",
+  "releaseStatus": "published-pilot"
 }

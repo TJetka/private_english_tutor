@@ -1,6 +1,6 @@
 # Pilot implementation
 
-Prepared on branch `pilot/four-week-book-course`; live v1 remains separate until parent approval. This replaces the original inline-script design with a small, build-free set of ES modules and JSON content. No runtime libraries or AI service were added.
+Released as app `2.0.0-pilot.1` and course `2026.09-pilot.1`, approved on 28 September 2026. This replaces the original inline-script design with a small, build-free set of ES modules and JSON content. No runtime libraries or AI service were added. GitHub Pages serves `main`; the parent deployed the extended existing Worker through the private Opera dashboard.
 
 ## Files and responsibilities
 
@@ -13,7 +13,7 @@ Prepared on branch `pilot/four-week-book-course`; live v1 remains separate until
 | `content/pilot.json` | Content version, source provenance, skill labels, weekly briefs and missions |
 | `content/units/u01.json` … `u03.json` | First three book units: 56 vocabulary items and 24 sentences |
 | `content/roadmap.json` | 26 provisional book milestones, mostly not yet authored |
-| `config.json` | Release status and optional pilot Worker URL; currently blank |
+| `config.json` | Release status and default sync URL, `https://eng-sync.t-jetka.workers.dev` |
 | `worker/index.mjs` | Extended eng-sync Worker: new event API plus existing routes |
 | `scripts/worker.js` | Parent-supplied legacy Worker source, preserved unchanged |
 | `scripts/course.mjs` | Dependency-free validation and report review helper |
@@ -61,7 +61,7 @@ The client uploads pending IDs before pulling pages. Only a complete, validated 
 
 Requests time out after 12 seconds. Offline errors retain pending records; retry occurs on app opening, completing/quitting a session, reconnect, focus, or a manual connection action. Browser tabs merge through per-event IndexedDB rows and refresh through BroadcastChannel; background refresh leaves active questions and parent form edits alone.
 
-KV is eventually consistent; cross-device visibility may lag. This design avoids overwriting separate events but does not claim instantaneous cross-region reads. The cloud protocol is covered by local fake-KV tests and still needs deployed acceptance testing.
+KV is eventually consistent; cross-device visibility may lag. This design avoids overwriting separate events but does not claim instantaneous cross-region reads. Local fake-KV tests and live API/client checks passed; physical-device testing remains a first-session check.
 
 ## Editing content
 
@@ -83,4 +83,6 @@ Validation on 27 September 2026:
 - Worker bundles successfully in Wrangler **4.142.0** dry-run mode, using a temporary TOML config with a dummy namespace. No cloud deployment or cloud data write was performed.
 - Backup import through the browser file chooser could not be completed because the automation extension disallowed local file access. Backup schema/conflict handling is covered in the automated tests; the complete browser restore flow still needs acceptance testing.
 
-Android device voices, deployed cloud behaviour, real-child usability and recovery across real devices require acceptance testing. There is no service worker, so an already-loaded page can keep saving without internet, but offline cold start is not guaranteed.
+On 28 September the parent-deployed Worker passed live health/CORS, synthetic writes and acknowledgements, two independent sync clients converging without duplicate XP, offline queue retention across a simulated client restart, retry, conflicting/malformed event rejection, profile isolation and backup merge/sync into a fresh client. Synthetic legacy progress, report and backup-list routes worked and v2 writes preserved their data. These tests used the real sync client with in-memory client stores over HTTPS; they do not certify physical Android storage, connectivity or browser file import. All ten Worker regressions also passed against the exact standalone bundle supplied for manual deployment.
+
+Android device voices, real-child usability and browser backup import/recovery across real devices require acceptance testing. There is no service worker, so an already-loaded page can keep saving without internet, but offline cold start is not guaranteed.
