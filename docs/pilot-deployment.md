@@ -2,7 +2,20 @@
 
 The parent approved the prepared pilot and publication on **28 September 2026**. It is on `pilot/four-week-book-course`; the existing live v1 app and `eng-sync` Worker remain unchanged until the cloud update is verified. No further content approval is needed for this reviewed release.
 
-Release preparation on 28 September: GitHub Pages settings were verified in the dashboard as **Deploy from a branch → main → /(root)**. SSH repository access works. Cloudflare is signed out in both the dashboard and Wrangler; account sign-in is the remaining access step before checking deployed source, bindings and rollback version. No publishing settings or workflows were changed.
+Release preparation on 28 September: GitHub Pages settings were verified in the dashboard as **Deploy from a branch → main → /(root)**. SSH repository access works. Opera is signed into the private Cloudflare account containing `eng-sync`; the normal Chrome profile is the user's work account and must not be used for private project authentication. The separate Wrangler sign-in attempt timed out waiting for its authorization callback; command-line authentication is **not verified**. No publishing settings or workflows were changed, and no new Worker code has been deployed.
+
+Verified in the private Cloudflare dashboard:
+
+| Setting | Existing value |
+| --- | --- |
+| Worker | `eng-sync` |
+| Public address | `https://eng-sync.t-jetka.workers.dev` |
+| KV binding | `PROGRESS` |
+| KV namespace | `eng_tutor_progress` |
+| KV namespace ID | `5785a6ebe60e4bef883e51d0708484a2` |
+| Active version before the pilot update | `ec55b282` (dashboard's abbreviated ID) |
+
+The namespace ID is configuration, not a credential. The deployed editor showed the legacy `worker.js`; a complete source comparison is still pending. The table is a deployment checkpoint, not evidence that the pilot has been published.
 
 ## What has changed operationally
 
@@ -28,13 +41,15 @@ Review the three book mappings, four weekly plans, pacing controls and [weekly a
 
 ## One-time cloud update after review
 
-Use the existing Cloudflare account. These commands are a deployment runbook, not steps already performed by the review agent. Wrangler is a deployment tool, not an app runtime dependency. Local packaging was checked with version 4.142.0; record the resolved tool version when deploying. The example must be copied to a file ending in `.toml` before Wrangler reads it.
+Use the existing private Cloudflare account through **Opera**, or Chrome **Guest** if necessary. Keep command-line credentials separate with the named profile `private-english-tutor`; always pass it explicitly. Wrangler's named-profile commands are experimental, so these instructions pin the tested version **4.142.0**. Wrangler is a deployment tool, not an app runtime dependency. The example must be copied to a file ending in `.toml` before Wrangler reads it.
 
 ```sh
 cd worker
-npx wrangler@4 login
+npx wrangler@4.142.0 auth create private-english-tutor --browser=false --scopes account:read user:read workers_scripts:write workers_kv:write
 cp -n wrangler.toml.example wrangler.toml
 ```
+
+Open the printed authorization URL in Opera, confirm the private account, and authorize Wrangler. `--browser=false` prevents the operating system from opening the work Chrome profile. Subsequent commands reuse this profile; do not recreate it for routine deployment.
 
 In Cloudflare **Workers & Pages → eng-sync → Settings → Bindings**, identify the namespace already bound as **PROGRESS**. Put that existing namespace ID into the local `wrangler.toml`. Keep the Worker name `eng-sync` and binding name `PROGRESS`. Do not create an empty replacement namespace. The namespace ID is an identifier; API credentials do not belong in this file or repository.
 
@@ -43,11 +58,23 @@ Before deployment, compare the dashboard's deployed source/bindings with the sup
 Check packaging, then deploy the additive update:
 
 ```sh
-npx wrangler@4 deploy --dry-run --config wrangler.toml
-npx wrangler@4 deploy --config wrangler.toml
+npx wrangler@4.142.0 deploy --dry-run --config wrangler.toml --profile private-english-tutor
+npx wrangler@4.142.0 deploy --config wrangler.toml --profile private-english-tutor
 ```
 
 Wrangler bundles the original Worker module and shared validator. Confirm the Worker URL remains `https://eng-sync.t-jetka.workers.dev`. Check `GET /health` returns `schemaVersion: 2` and `storageConfigured: true`. This checks configuration, not data persistence.
+
+### Dashboard fallback if CLI sign-in fails
+
+An already authenticated private Opera session can publish through **eng-sync → Edit code** without granting Wrangler access. First export the existing `worker.js`, compare it with `scripts/worker.js`, and record the prior version as above. Build a single bundled module locally:
+
+```sh
+npx wrangler@4.142.0 deploy --dry-run --minify --outdir ../local/worker-bundle --config wrangler.toml
+```
+
+The dry run does not publish or need an authenticated profile. Replace the editor's `worker.js` with the generated `local/worker-bundle/index.js`, review the draft, then deploy it to the existing Worker. Do not paste only `worker/index.mjs`: its imports need bundling. Keep the existing binding and namespace. The same health, persistence and legacy-route acceptance checks below apply. A minified dry run passed on 28 September; the dashboard replacement has not yet been performed.
+
+If the browser switches to an unrelated personal page, return to the project tab before continuing. Do not inspect other private tabs to recover deployment state.
 
 After the update and acceptance checks, set that URL in `config.json`'s `syncUrl`, so new devices need no manual server entry. Existing browser overrides still take precedence; a deliberately empty override disables sync on that browser. The currently deployed old code does not serve the v2 API yet, so the checked-in config remains blank until the upgrade is verified.
 

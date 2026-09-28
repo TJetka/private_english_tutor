@@ -2,7 +2,7 @@
 
 A small mobile web app for a Polish-speaking beginner, using soccer, Minecraft and maths as familiar contexts. A parent leads one weekly lesson and reviews adjustments; short daily practice adapts through spaced review.
 
-**Current branch:** `pilot/four-week-book-course`, approved by the parent on 28 September 2026. The existing [live v1](https://tjetka.github.io/private_english_tutor/) has not been replaced. Cloudflare sign-in and deployed acceptance checks remain before publication.
+**Current branch:** `pilot/four-week-book-course`, approved by the parent on 28 September 2026. The existing [live v1](https://tjetka.github.io/private_english_tutor/) has not been replaced. Cloudflare deployment and live acceptance checks remain before publication; the private Opera dashboard is authenticated, but the separate Wrangler sign-in timed out.
 
 ## Start here
 
