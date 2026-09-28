@@ -19,6 +19,8 @@ The namespace ID is configuration, not a credential. Before the update, the pare
 
 ## Verified release checks
 
+The frontend release commit is `b8ee221b4b0f4ff9c16050e7fc0851186af7eecd`. After pushing it normally to `main`, all nine required public assets (HTML, configuration, three ES modules, course manifest and three unit files) matched their local SHA-256 hashes. Module and JSON MIME types were correct. The live config enables `https://eng-sync.t-jetka.workers.dev`; the course version is `2026.09-pilot.1`. The detailed verification record is saved locally at ignored `local/published-verification.json`.
+
 On 28 September, `GET /health` returned `schemaVersion: 2` and `storageConfigured: true`. Real HTTPS requests with fresh synthetic profiles verified:
 
 - Writes and complete acknowledgements; CORS preflight supports the frontend's POST requests.
