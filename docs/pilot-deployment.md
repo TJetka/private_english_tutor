@@ -15,7 +15,7 @@ Verified in the private Cloudflare dashboard:
 | KV namespace ID | `5785a6ebe60e4bef883e51d0708484a2` |
 | Active version before the pilot update | `ec55b282` (dashboard's abbreviated ID) |
 
-The namespace ID is configuration, not a credential. The deployed editor showed the legacy `worker.js`; a complete source comparison is still pending. The table is a deployment checkpoint, not evidence that the pilot has been published.
+The namespace ID is configuration, not a credential. On 28 September the parent saved the deployed `worker.js` as ignored `local/cloudflare-before-pilot.js`. It exactly matches `scripts/worker.js` (SHA-256 `c49192abed21e7da36579f3e1d508f12acc62da7f1765f13e59d8b9afd4ce255`), so there are no dashboard-only source changes to preserve. The table is a deployment checkpoint, not evidence that the pilot has been published.
 
 ## What has changed operationally
 
@@ -73,6 +73,8 @@ npx wrangler@4.142.0 deploy --dry-run --minify --outdir ../local/worker-bundle -
 ```
 
 The dry run does not publish or need an authenticated profile. Replace the editor's `worker.js` with the generated `local/worker-bundle/index.js`, review the draft, then deploy it to the existing Worker. Do not paste only `worker/index.mjs`: its imports need bundling. Keep the existing binding and namespace. The same health, persistence and legacy-route acceptance checks below apply. A minified dry run passed on 28 September; the dashboard replacement has not yet been performed.
+
+For the current manual handoff, the readable standalone bundle is saved as ignored `local/cloudflare-manual/worker.js`. All ten Worker regression tests also passed against that exact bundle, including legacy routes and preservation of legacy records. Copy the entire file into the dashboard's existing `worker.js`, then deploy. No dependency installation, additional file upload or binding change is needed in the dashboard. Publication remains pending until the parent deploys and the live checks pass.
 
 If the browser switches to an unrelated personal page, return to the project tab before continuing. Do not inspect other private tabs to recover deployment state.
 
