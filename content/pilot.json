@@ -2,14 +2,15 @@
   "schemaVersion": 1,
   "courseId": "dk-junior-pilot",
   "version": "2026.09-pilot.1",
-  "status": "parent-review-required",
+  "status": "parent-approved",
   "provenance": {
     "preparedOn": "2026-09-27",
     "preparedFromGit": "59257ca",
     "source": "English for Everyone Junior: Beginner’s Course, First American Edition (2020)",
     "sourceSha256": "4dcff56a64cb95ee2e0d0814d2a88b68fdc77377b2fd763ff79e668c1fb8b470",
     "method": "Original practice adapted to the learning objectives of the supplied book; no page scans or recordings distributed.",
-    "reviewStatus": "parent-review-required"
+    "reviewStatus": "parent-approved",
+    "approvedOn": "2026-09-28"
   },
   "interests": [
     "soccer",

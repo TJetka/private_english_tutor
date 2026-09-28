@@ -1,6 +1,8 @@
 # Publishing the reviewed pilot
 
-The pilot is prepared on `pilot/four-week-book-course`. It has not been merged into the GitHub Pages source branch or deployed to Cloudflare. The parent explicitly chose review before publishing. The existing live v1 app and `eng-sync` Worker remain unchanged.
+The parent approved the prepared pilot and publication on **28 September 2026**. It is on `pilot/four-week-book-course`; the existing live v1 app and `eng-sync` Worker remain unchanged until the cloud update is verified. No further content approval is needed for this reviewed release.
+
+Release preparation on 28 September: GitHub Pages settings were verified in the dashboard as **Deploy from a branch → main → /(root)**. SSH repository access works. Cloudflare is signed out in both the dashboard and Wrangler; account sign-in is the remaining access step before checking deployed source, bindings and rollback version. No publishing settings or workflows were changed.
 
 ## What has changed operationally
 

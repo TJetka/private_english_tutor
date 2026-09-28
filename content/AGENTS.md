@@ -2,7 +2,7 @@
 
 Read `docs/weekly-review.md` and `content/pilot.json` before changing teaching material.
 
-- The parent reviews content before it is published. Work on a branch; do not deploy, merge into the Pages source branch, or advance a learner automatically.
+- The parent reviews content before it is published. Work on a branch until the parent approves the concrete change; that approval permits deployment and merging without asking again. Do not advance a learner automatically.
 - Keep the 26 book milestones as a provisional sequence. Author one or two units ahead, guided by actual practice and a short parent observation. Do not fill all 26 milestones with speculative exercises.
 - Use the supplied book as the source of objectives and page references. Write original examples and explanations; keep the PDF and extracted pages outside the deployed app.
 - Confirm an existing item's teaching meaning before editing. Preserve IDs for wording corrections; increment its revision. Give a different target meaning a new ID. Never rewrite old practice events.

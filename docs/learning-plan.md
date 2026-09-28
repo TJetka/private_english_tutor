@@ -1,6 +1,6 @@
 # Four-week pilot
 
-Ready for parent review; not published. Intended start: 28 September 2026, adjustable. Rhythm confirmed by the parent: one joint lesson of about 30 minutes and five short practices each week. Device: Android smartphone. Themes: soccer, Minecraft and maths.
+Approved by the parent on 28 September 2026; deployment pending. Intended start: 28 September 2026, adjustable. Rhythm confirmed by the parent: one joint lesson of about 30 minutes and five short practices each week. Device: Android smartphone. Themes: soccer, Minecraft and maths.
 
 Source: the supplied **English for Everyone Junior: Beginner’s Course, First American Edition (2020)**, ISBN 978-1-4654-9230-2. Book units 1–3 and printed/PDF pages 10–27 were inspected, including the illustrated material that is missing from plain text extraction. The app contains original practice and Polish explanations aligned to those objectives; book pages, artwork, songs and recordings are not shipped with it.
 
